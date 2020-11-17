@@ -13,7 +13,7 @@ public class LocalisationService {
 
     public Localisation createLocalisation(String cityName, String countryName, String latitude, String longitude, String region) {
         if (cityName.isEmpty() || countryName.isEmpty()) {
-            throw new NoCityorCountryExeption();
+            throw new NoCityOrCountryException("City and Country should not be empty");
         }
         Localisation localisation = new Localisation();
         localisation.setCityName(cityName);
