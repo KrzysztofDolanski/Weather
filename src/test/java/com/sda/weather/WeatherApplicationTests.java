@@ -19,6 +19,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
@@ -93,14 +94,14 @@ class WeatherApplicationTests {
         //then
 
         MockHttpServletResponse response = mvcResult.getResponse();
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-
-
         MockHttpServletResponse response2 = mvcResult2.getResponse();
-        assertThat(response2.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
-
         List<Localisation> all = localisationRepository.findAll();
-        assertThat(all).isEmpty();
+
+
+        assertAll(() ->
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value()),
+                () -> assertThat(response2.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value()),
+                () -> assertThat(all).isEmpty());
 
 
     }
