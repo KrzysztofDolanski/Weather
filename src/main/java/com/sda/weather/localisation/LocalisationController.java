@@ -1,5 +1,6 @@
 package com.sda.weather.localisation;
 
+import com.sda.weather.weather.ConnectionService;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.util.List;
 public class LocalisationController {
 
     final LocalisationService localisationService;
+    final ConnectionService connectionService;
 
     @PostMapping("/localise")
     ResponseEntity<LocalisationDto> createLocalisation(@RequestBody LocalisationDto localisationDto){
@@ -62,5 +64,12 @@ public class LocalisationController {
         localisationDto.setLongitude("18.5684902");
         localisationDto.setRegion("pomorskie");
         return Collections.singletonList(localisationDto);
+    }
+
+    @GetMapping("/localise/{cityName}")
+    void saveLocalisationInDatabase (String cityName){
+        List<LocalisationDto> cityLocalisation = connectionService.getCityLocalisation(cityName);
+        LocalisationDto localisationDto = cityLocalisation.get(0);
+        localisationService.saveLocalisationInDatabase(localisationDto);
     }
 }

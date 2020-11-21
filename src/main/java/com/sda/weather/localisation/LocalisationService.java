@@ -41,4 +41,15 @@ public class LocalisationService {
     Localisation getLocalisationById(Long id) throws NotFoundException {
         return localisationRepository.findById(Long.valueOf(id)).orElseThrow(()-> new NotFoundException("Nie znaleziono " + id));
     }
+
+    public void saveLocalisationInDatabase(LocalisationDto localisationDto) {
+
+        Localisation localisation = new Localisation();
+        localisation.setCountryName(localisationDto.getCountryName());
+        localisation.setCityName(localisationDto.getCityName());
+        localisation.setLatitude(localisationDto.getLatitude());
+        localisation.setLongitude(localisationDto.getLongitude());
+        localisation.setRegion(localisationDto.getRegion());
+        localisationRepository.save(localisation);
+    }
 }

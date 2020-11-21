@@ -25,4 +25,12 @@ public class ExceptionHandlerController {
 
     }
 
+
+    @ExceptionHandler(NoWeatherFindException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    void noWeatherFindInWebService(NoWeatherFindException e){
+        log.error(e.getMessage());
+
+    }
+
 }
