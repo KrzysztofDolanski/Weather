@@ -17,4 +17,12 @@ public class ExceptionHandlerController {
       log.error(e.getMessage());
 
     }
+
+    @ExceptionHandler(CityOrCountryBlankException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    void cityOrCountryShouldNotBeBlank(CityOrCountryBlankException e){
+        log.error(e.getMessage());
+
+    }
+
 }

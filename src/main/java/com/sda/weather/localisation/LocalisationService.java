@@ -1,9 +1,13 @@
 package com.sda.weather.localisation;
 
 
+import com.sda.weather.exeptions.CityOrCountryBlankException;
 import com.sda.weather.exeptions.NoCityOrCountryException;
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -19,6 +23,11 @@ public class LocalisationService {
             throw new NoCityOrCountryException("City and Country should not be empty");
         }
 
+        String REGEX_CHEQUE_IF_STRING_NOT_EMPTY = "((?!\\s*$)+[A-ńA-śA-źA-ż])\\w+";
+        if (!cityName.equals(REGEX_CHEQUE_IF_STRING_NOT_EMPTY) || !countryName.equals(REGEX_CHEQUE_IF_STRING_NOT_EMPTY)) {
+            throw new CityOrCountryBlankException();
+        }
+
         Localisation localisation = new Localisation();
         localisation.setCityName(cityName);
         localisation.setCountryName(countryName);
@@ -27,5 +36,9 @@ public class LocalisationService {
         localisation.setRegion(localisationDefinition.getRegion());
 
         return localisationRepository.save(localisation);
+    }
+
+    Localisation getLocalisationById(Long id) throws NotFoundException {
+        return localisationRepository.findById(Long.valueOf(id)).orElseThrow(()-> new NotFoundException("Nie znaleziono " + id));
     }
 }

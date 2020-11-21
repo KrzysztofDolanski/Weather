@@ -1,10 +1,15 @@
 package com.sda.weather.localisation;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @Builder
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class LocalisationDefinition {
     private String cityName;
     private String countryName;

@@ -1,5 +1,6 @@
 package com.sda.weather.localisation;
 
+import com.sda.weather.exeptions.CityOrCountryBlankException;
 import com.sda.weather.exeptions.NoCityOrCountryException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,11 +28,11 @@ class LocalisationServiceTest {
         // given
         when(localisationRepository.save(any(Localisation.class))).thenReturn(new Localisation());
         LocalisationDefinition data = LocalisationDefinition.builder()
-                .cityName("Starogard Gdański")
+                .cityName("Gdańsk")
                 .countryName("Polska")
                 .longitude("23.13")
                 .latitude("13.231")
-                .region("mazowieckie")
+                .region("pomorskie")
                 .build();
 
         // when
@@ -76,7 +77,7 @@ class LocalisationServiceTest {
         Throwable throwable = catchThrowable(() -> localisationService.createLocalisation(data));
 
         // then
-        assertThat(throwable).isInstanceOf(NoCityOrCountryException.class);
+        assertThat(throwable).isInstanceOf(CityOrCountryBlankException.class);
         verify(localisationRepository, times(0)).save(any(Localisation.class));
     }
 }

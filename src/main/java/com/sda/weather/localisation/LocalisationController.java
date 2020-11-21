@@ -1,5 +1,6 @@
 package com.sda.weather.localisation;
 
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,19 +25,31 @@ public class LocalisationController {
     }
 
     private LocalisationDefinition mapToLocalisationDefinition(LocalisationDto localisationDto) {
-        // todo develop this method
-        return null;
+        LocalisationDefinition localisationDefinition = new LocalisationDefinition();
+        localisationDefinition.setCityName(localisationDto.getCityName());
+        localisationDefinition.setCountryName(localisationDto.getCountryName());
+        localisationDefinition.setLatitude(localisationDto.getLatitude());
+        localisationDefinition.setLongitude(localisationDto.getLongitude());
+        localisationDefinition.setRegion(localisationDto.getRegion());
+        return localisationDefinition;
     }
 
     private LocalisationDto mapToLocalisationDto(Localisation createdLocalisation) {
         LocalisationDto localisationDto = new LocalisationDto();
+        localisationDto.setId(createdLocalisation.getId());
         localisationDto.setCityName(createdLocalisation.getCityName());
         localisationDto.setCountryName(createdLocalisation.getCountryName());
         localisationDto.setLatitude(createdLocalisation.getLatitude());
         localisationDto.setLongitude(createdLocalisation.getLongitude());
         localisationDto.setRegion(createdLocalisation.getRegion());
-        // todo add map fo the id field
+
         return localisationDto;
+    }
+
+    @GetMapping("/localise/{id}")
+    LocalisationDto getLocalisationById(Long id) throws NotFoundException {
+        Localisation localisationById = localisationService.getLocalisationById(id);
+        return mapToLocalisationDto(localisationById);
     }
 
 
