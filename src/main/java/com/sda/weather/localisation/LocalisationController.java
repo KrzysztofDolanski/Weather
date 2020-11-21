@@ -12,20 +12,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LocalisationController {
 
-
     final LocalisationService localisationService;
-
-
 
     @PostMapping("/localise")
     ResponseEntity<LocalisationDto> createLocalisation(@RequestBody LocalisationDto localisationDto){
-        String cityName = localisationDto.getCityName();
-        String countryName = localisationDto.getCountryName();
-        String latitude = localisationDto.getLatitude();
-        String longitude = localisationDto.getLongitude();
-        String region = localisationDto.getRegion();
-        Localisation createdLocalisation = localisationService.createLocalisation(cityName, countryName, latitude, longitude, region);
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapToLocalisationDto(createdLocalisation));
+        LocalisationDefinition localisationDefinition = mapToLocalisationDefinition(localisationDto);
+        Localisation createdLocalisation = localisationService.createLocalisation(localisationDefinition);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(mapToLocalisationDto(createdLocalisation));
+    }
+
+    private LocalisationDefinition mapToLocalisationDefinition(LocalisationDto localisationDto) {
+        // todo develop this method
+        return null;
     }
 
     private LocalisationDto mapToLocalisationDto(Localisation createdLocalisation) {
@@ -35,6 +35,7 @@ public class LocalisationController {
         localisationDto.setLatitude(createdLocalisation.getLatitude());
         localisationDto.setLongitude(createdLocalisation.getLongitude());
         localisationDto.setRegion(createdLocalisation.getRegion());
+        // todo add map fo the id field
         return localisationDto;
     }
 

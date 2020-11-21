@@ -13,10 +13,8 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-
 @ExtendWith(MockitoExtension.class)
 class LocalisationServiceTest {
-
 
     @Mock
     LocalisationRepository localisationRepository;
@@ -25,26 +23,60 @@ class LocalisationServiceTest {
     LocalisationService localisationService;
 
     @Test
-    void createLocalisation_calsLocalisationRepository(){
+    void createLocalisation_calsLocalisationRepository() {
+        // given
         when(localisationRepository.save(any(Localisation.class))).thenReturn(new Localisation());
+        LocalisationDefinition data = LocalisationDefinition.builder()
+                .cityName("Starogard Gdański")
+                .countryName("Polska")
+                .longitude("23.13")
+                .latitude("13.231")
+                .region("mazowieckie")
+                .build();
 
-        Localisation result = localisationService.createLocalisation("Starogard Gdański", "Polska", "23.13", "13.231", "mazowieckie");
+        // when
+        Localisation result = localisationService.createLocalisation(data);
 
-//        assertThat(result).isExactlyInstanceOf(NoCityOrCountryException.class);
+        // then
+        assertThat(result).isExactlyInstanceOf(Localisation.class);
         verify(localisationRepository, times(1)).save(any(Localisation.class));
     }
 
     @Test
-    void createLocalisation_whenCityOrCountry_throwNoCityOrCountryException() {
+    void createLocalisation_whenCityOrCountryAreEmpty_throwsNoCityOrCountryException() {
+        // given
+        LocalisationDefinition data = LocalisationDefinition.builder()
+                .cityName("")
+                .countryName("Polska")
+                .longitude("23.13")
+                .latitude("13.231")
+                .region("mazowieckie")
+                .build();
 
-//        when(localisationRepository.save(any(Localisation.class))).thenReturn(new Localisation());
+        // when
+        Throwable throwable = catchThrowable(() -> localisationService.createLocalisation(data));
 
-
-        Throwable throwable = catchThrowable(() -> localisationService
-                .createLocalisation("", "Polska", "23.13", "13.231", "mazowieckie"));
-
+        // then
         assertThat(throwable).isInstanceOf(NoCityOrCountryException.class);
         verify(localisationRepository, times(0)).save(any(Localisation.class));
+    }
 
+    @Test
+    void createLocalisation_whenCityOrCountryAreBlank_throwsNoCityOrCountryException() {
+        // given
+        LocalisationDefinition data = LocalisationDefinition.builder()
+                .cityName("   ")
+                .countryName("Polska")
+                .longitude("23.13")
+                .latitude("13.231")
+                .region("mazowieckie")
+                .build();
+
+        // when
+        Throwable throwable = catchThrowable(() -> localisationService.createLocalisation(data));
+
+        // then
+        assertThat(throwable).isInstanceOf(NoCityOrCountryException.class);
+        verify(localisationRepository, times(0)).save(any(Localisation.class));
     }
 }

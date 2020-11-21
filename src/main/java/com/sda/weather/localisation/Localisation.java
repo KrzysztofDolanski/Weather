@@ -12,7 +12,6 @@ import javax.persistence.Id;
 //@NoArgsConstructor
 public class Localisation {
 
-
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;

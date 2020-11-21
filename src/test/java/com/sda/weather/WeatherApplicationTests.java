@@ -40,7 +40,7 @@ class WeatherApplicationTests {
         //when
         localisationRepository.deleteAll();
 
-        LocalisationDto localisationDto = new LocalisationDto("Gdansk", "Polska", "54.347629", "18.6452324", "pomorskie");
+        LocalisationDto localisationDto = new LocalisationDto(null, "Gdansk", "Polska", "54.347629", "18.6452324", "pomorskie");
 
         String content = objectMapper.writeValueAsString(localisationDto);
         MockHttpServletRequestBuilder post = post("/localise")
@@ -71,8 +71,8 @@ class WeatherApplicationTests {
     void createNewLocalisation_whenCityOrCountryAreEmpty_returnsHttpStatus400Code() throws Exception {
         localisationRepository.deleteAll();
 
-        LocalisationDto localisationDto = new LocalisationDto("", "Polska", "54.347629", "18.6452324", "pomorskie");
-        LocalisationDto localisationDto2 = new LocalisationDto("Gdansk", "", "54.347629", "18.6452324", "pomorskie");
+        LocalisationDto localisationDto = new LocalisationDto(null, "", "Polska", "54.347629", "18.6452324", "pomorskie");
+        LocalisationDto localisationDto2 = new LocalisationDto(null, "Gdansk", "", "54.347629", "18.6452324", "pomorskie");
 
 
         String content = objectMapper.writeValueAsString(localisationDto);
