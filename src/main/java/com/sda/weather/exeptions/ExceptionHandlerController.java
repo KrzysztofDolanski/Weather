@@ -27,4 +27,11 @@ public class ExceptionHandlerController {
     void noWeatherFindInWebService(NoWeatherFindException e){
         log.error(e.getMessage());
     }
+
+    @ExceptionHandler(NotFoundLocalisationException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    void noWeatherFindInWebService(NotFoundLocalisationException e){
+        log.error(e.getMessage());
+    }
+
 }
