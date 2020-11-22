@@ -32,7 +32,6 @@ class ConnectionServiceTest {
 
     @Test
     void isCityNameIsValid_FromOpenWeatherMapApi() {
-
         //when
         ConnectionService connectionService = new ConnectionService();
 
@@ -46,7 +45,6 @@ class ConnectionServiceTest {
 
     @Test
     void isCityNameIsValid_FromWeatherStackApi() {
-
         //when
         ConnectionService connectionService = new ConnectionService();
 

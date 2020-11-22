@@ -62,6 +62,22 @@ public class ConnectionService {
         String latitudeDirty = split[split.length - 7];
         String cityNameDirty = split[split.length - 8];
 
+
+        //Optional values
+        //todo make this 5 values useful
+        String temperatureDirty = split[4];
+        String pressureDirty = split[8];
+        String humidityDirty = split[11];
+        String windDirectionDirty = split[19];
+        String windSpeedDirty = split[18];
+
+        System.err.println("Optional Values____________");
+        System.err.println(temperatureDirty);
+        System.err.println(pressureDirty);
+        System.err.println(humidityDirty);
+        System.err.println(windDirectionDirty);
+        System.err.println(windSpeedDirty);
+
         String[] countryArrayToGetCountryName = countryNameDirty.split(":");
         String countryNameToReplacement = countryArrayToGetCountryName[1];
         String replaceCountryName = countryNameToReplacement.replace('"', '}');
@@ -107,7 +123,6 @@ public class ConnectionService {
 
 
         //optional values of weather
-
 
         //todo make this 5 values useful
 
