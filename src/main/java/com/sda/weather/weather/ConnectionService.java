@@ -36,6 +36,12 @@ public class ConnectionService {
     private String longitude = null;
     private String region = null;
 
+    private String temperature;
+    private String pressure;
+    private String humidity;
+    private String widnDirection;
+    private String windSpeed;
+
 
 
     public List<LocalisationDto> getCityLocalisationFromOpenWeatherMap(String city) {
@@ -99,11 +105,31 @@ public class ConnectionService {
         String cityNameDirty = split[4];
         String regionDirty = split[6];
 
+
+        //optional values of weather
+
+
+        //todo make this 5 values useful
+
+        String temperature = split[14];
+        String pressure = split[21];
+        String humidity = split[23];
+        String windDirection = split[20];
+        String windSpeed = split[18];
+
         System.err.println(countryNameDirty);
         System.err.println(latitudeDirty);
         System.err.println(latitudeDirty);
         System.err.println(cityNameDirty);
         System.err.println(regionDirty);
+
+
+        System.err.println("OPTIONAL VALUES");
+        System.err.println(temperature);
+        System.err.println(pressure);
+        System.err.println(humidity);
+        System.err.println(windDirection);
+        System.err.println(windSpeed);
 
         String[] countryArrayToGetCountryName = countryNameDirty.split(":");
         String countryNameToReplacement = countryArrayToGetCountryName[1];
