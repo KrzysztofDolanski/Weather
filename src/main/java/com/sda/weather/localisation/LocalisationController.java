@@ -17,7 +17,7 @@ public class LocalisationController {
 
     final LocalisationService localisationService;
     final LocalisationMapping localisationMapping;
-//    final ConnectionService connectionService;
+
 
     @PostMapping("/localise")
     ResponseEntity<LocalisationDto> createLocalisation(@RequestBody LocalisationDto localisationDto) {
@@ -42,15 +42,6 @@ public class LocalisationController {
         return localisationService.getAllLocalisations();
     }
 
-//    @GetMapping("/localise/save/{cityName}")
-//    void saveLocalisationInDatabase(String cityName) {
-//
-//        List<LocalisationDto> cityLocalisation = connectionService.getCityLocalisationFromOpenWeatherMap(cityName);
-//
-//        Optional<LocalisationDto> any = cityLocalisation.stream().findAny();
-//
-//        localisationService.saveLocalisationInDatabase(any.get());
-//
-//    }
+
 }
 
