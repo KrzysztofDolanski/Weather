@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,9 +19,10 @@ public class LocalisationController {
     final ConnectionService connectionService;
 
     @PostMapping("/localise")
-    ResponseEntity<LocalisationDto> createLocalisation(@RequestBody LocalisationDto localisationDto){
+    ResponseEntity<LocalisationDto> createLocalisation(@RequestBody LocalisationDto localisationDto) {
         LocalisationDefinition localisationDefinition = mapToLocalisationDefinition(localisationDto);
         Localisation createdLocalisation = localisationService.createLocalisation(localisationDefinition);
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(mapToLocalisationDto(createdLocalisation));
@@ -56,20 +58,20 @@ public class LocalisationController {
 
 
     @GetMapping("/localise")
-    List<LocalisationDto> getLocasisations(){
-        LocalisationDto localisationDto = new LocalisationDto();
-        localisationDto.setCityName("Sopot");
-        localisationDto.setCountryName("Polska");
-        localisationDto.setLatitude("54.4447922");
-        localisationDto.setLongitude("18.5684902");
-        localisationDto.setRegion("pomorskie");
-        return Collections.singletonList(localisationDto);
+    List<Localisation> getLocasisations() {
+
+        return localisationService.getAllLocalisations();
     }
 
-    @GetMapping("/localise/{cityName}")
-    void saveLocalisationInDatabase (String cityName){
-        List<LocalisationDto> cityLocalisation = connectionService.getCityLocalisation(cityName);
-        LocalisationDto localisationDto = cityLocalisation.get(0);
-        localisationService.saveLocalisationInDatabase(localisationDto);
+    @GetMapping("/localise/save/{cityName}")
+    void saveLocalisationInDatabase(String cityName) {
+
+        List<LocalisationDto> cityLocalisation = connectionService.getCityLocalisationFromOpenWeatherMap(cityName);
+
+        Optional<LocalisationDto> any = cityLocalisation.stream().findAny();
+
+        localisationService.saveLocalisationInDatabase(any.get());
+
     }
 }
+

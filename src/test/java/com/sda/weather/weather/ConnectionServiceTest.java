@@ -31,14 +31,30 @@ class ConnectionServiceTest {
 
 
     @Test
-    void isCityNameFromApiIsValid() {
+    void isCityNameIsValid_FromOpenWeatherMapApi() {
 
-        String city = "Gdańsk";
-
+        //when
         ConnectionService connectionService = new ConnectionService();
-        List<LocalisationDto> cityLocalisation = connectionService.getCityLocalisation(city);
 
+        //given
+        String city = "Gdańsk";
+        List<LocalisationDto> cityLocalisation = connectionService.getCityLocalisationFromOpenWeatherMap(city);
+
+        //then
         assertThat(cityLocalisation.get(0).getCityName()).isEqualTo("Gdańsk");
+    }
 
+    @Test
+    void isCityNameIsValid_FromWeatherStackApi() {
+
+        //when
+        ConnectionService connectionService = new ConnectionService();
+
+        //given
+        String city = "New York";
+        List<LocalisationDto> cityLocalisation = connectionService.getCityLocalisationFromWeatherStack(city);
+
+        //then
+        assertThat(cityLocalisation.get(0).getCityName()).isEqualTo("New York");
     }
-    }
+}

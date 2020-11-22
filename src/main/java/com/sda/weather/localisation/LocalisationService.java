@@ -7,7 +7,7 @@ import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -51,5 +51,10 @@ public class LocalisationService {
         localisation.setLongitude(localisationDto.getLongitude());
         localisation.setRegion(localisationDto.getRegion());
         localisationRepository.save(localisation);
+    }
+
+    public List<Localisation> getAllLocalisations(){
+        List<Localisation> all = localisationRepository.findAll();
+        return all;
     }
 }
