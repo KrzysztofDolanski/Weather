@@ -1,6 +1,6 @@
 package com.sda.weather.localisation;
 
-import com.sda.weather.weather.ConnectionService;
+//import com.sda.weather.weather.ConnectionService;
 import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,62 +16,41 @@ import java.util.Optional;
 public class LocalisationController {
 
     final LocalisationService localisationService;
-    final ConnectionService connectionService;
+    final LocalisationMapping localisationMapping;
+//    final ConnectionService connectionService;
 
     @PostMapping("/localise")
     ResponseEntity<LocalisationDto> createLocalisation(@RequestBody LocalisationDto localisationDto) {
-        LocalisationDefinition localisationDefinition = mapToLocalisationDefinition(localisationDto);
+        LocalisationDefinition localisationDefinition = localisationMapping.mapToLocalisationDefinition(localisationDto);
         Localisation createdLocalisation = localisationService.createLocalisation(localisationDefinition);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(mapToLocalisationDto(createdLocalisation));
+                .body(localisationMapping.mapToLocalisationDto(createdLocalisation));
     }
 
-    private LocalisationDefinition mapToLocalisationDefinition(LocalisationDto localisationDto) {
-        LocalisationDefinition localisationDefinition = new LocalisationDefinition();
-        localisationDefinition.setCityName(localisationDto.getCityName());
-        localisationDefinition.setCountryName(localisationDto.getCountryName());
-        localisationDefinition.setLatitude(localisationDto.getLatitude());
-        localisationDefinition.setLongitude(localisationDto.getLongitude());
-        localisationDefinition.setRegion(localisationDto.getRegion());
-        return localisationDefinition;
-    }
-
-    private LocalisationDto mapToLocalisationDto(Localisation createdLocalisation) {
-        LocalisationDto localisationDto = new LocalisationDto();
-        localisationDto.setId(createdLocalisation.getId());
-        localisationDto.setCityName(createdLocalisation.getCityName());
-        localisationDto.setCountryName(createdLocalisation.getCountryName());
-        localisationDto.setLatitude(createdLocalisation.getLatitude());
-        localisationDto.setLongitude(createdLocalisation.getLongitude());
-        localisationDto.setRegion(createdLocalisation.getRegion());
-
-        return localisationDto;
-    }
 
     @GetMapping("/localise/{id}")
     LocalisationDto getLocalisationById(Long id) throws NotFoundException {
         Localisation localisationById = localisationService.getLocalisationById(id);
-        return mapToLocalisationDto(localisationById);
+        return localisationMapping.mapToLocalisationDto(localisationById);
     }
 
 
     @GetMapping("/localise")
-    List<Localisation> getLocasisations() {
-
+    List<Localisation> getLocalisations() {
         return localisationService.getAllLocalisations();
     }
 
-    @GetMapping("/localise/save/{cityName}")
-    void saveLocalisationInDatabase(String cityName) {
-
-        List<LocalisationDto> cityLocalisation = connectionService.getCityLocalisationFromOpenWeatherMap(cityName);
-
-        Optional<LocalisationDto> any = cityLocalisation.stream().findAny();
-
-        localisationService.saveLocalisationInDatabase(any.get());
-
-    }
+//    @GetMapping("/localise/save/{cityName}")
+//    void saveLocalisationInDatabase(String cityName) {
+//
+//        List<LocalisationDto> cityLocalisation = connectionService.getCityLocalisationFromOpenWeatherMap(cityName);
+//
+//        Optional<LocalisationDto> any = cityLocalisation.stream().findAny();
+//
+//        localisationService.saveLocalisationInDatabase(any.get());
+//
+//    }
 }
 
