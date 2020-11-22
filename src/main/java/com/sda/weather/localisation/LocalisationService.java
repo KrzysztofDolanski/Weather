@@ -23,27 +23,33 @@ public class LocalisationService {
             throw new NoCityOrCountryException("City and Country should not be empty");
         }
 
-        String REGEX_CHEQUE_IF_STRING_NOT_EMPTY = "((?!\\s*$)+[A-ńA-śA-źA-ż])\\w+";
-        if (!cityName.equals(REGEX_CHEQUE_IF_STRING_NOT_EMPTY) || !countryName.equals(REGEX_CHEQUE_IF_STRING_NOT_EMPTY)) {
-            throw new CityOrCountryBlankException();
-        }
+        // todo use isBlank
+
+//          Pattern compiledPattern = Pattern.compile("Marcin");
+//          Matcher matcher = compiledPattern.matcher("Nazywam sie Marcin Pietraszek");
+//          System.out.println(matcher.find());
+//  todo remove
+//        String REGEX_CHEQUE_IF_STRING_NOT_EMPTY = "((?!\\s*$)+[A-ńA-śA-źA-ż])\\w+";
+//        if (!cityName.equals(REGEX_CHEQUE_IF_STRING_NOT_EMPTY) || !countryName.equals(REGEX_CHEQUE_IF_STRING_NOT_EMPTY)) {
+//            throw new CityOrCountryBlankException();
+//        }
 
         Localisation localisation = new Localisation();
         localisation.setCityName(cityName);
         localisation.setCountryName(countryName);
         localisation.setLatitude(localisationDefinition.getLatitude());
-        localisation.setLongitude(localisation.getLongitude());
-        localisation.setRegion(localisationDefinition.getRegion());
+        localisation.setLongitude(localisation.getLongitude());         // todo use localisationDefinition.getLongitude()
+        localisation.setRegion(localisationDefinition.getRegion());     // todo check if isBlank, then don't save it
 
         return localisationRepository.save(localisation);
     }
 
-    Localisation getLocalisationById(Long id) throws NotFoundException {
-        return localisationRepository.findById(Long.valueOf(id)).orElseThrow(()-> new NotFoundException("Nie znaleziono " + id));
+    Localisation getLocalisationById(Long id) {
+        return localisationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Nie znaleziono " + id));   // todo create your own exception
     }
 
-    public void saveLocalisationInDatabase(LocalisationDto localisationDto) {
-
+    public void saveLocalisationInDatabase(LocalisationDto localisationDto) {   // todo remove
         Localisation localisation = new Localisation();
         localisation.setCountryName(localisationDto.getCountryName());
         localisation.setCityName(localisationDto.getCityName());
@@ -53,8 +59,7 @@ public class LocalisationService {
         localisationRepository.save(localisation);
     }
 
-    public List<Localisation> getAllLocalisations(){
-        List<Localisation> all = localisationRepository.findAll();
-        return all;
+    public List<Localisation> getAllLocalisations() {
+        return localisationRepository.findAll();
     }
 }

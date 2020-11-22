@@ -1,15 +1,14 @@
 package com.sda.weather.localisation;
 
-//import com.sda.weather.weather.ConnectionService;
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,7 +16,6 @@ public class LocalisationController {
 
     final LocalisationService localisationService;
     final LocalisationMapping localisationMapping;
-
 
     @PostMapping("/localise")
     ResponseEntity<LocalisationDto> createLocalisation(@RequestBody LocalisationDto localisationDto) {
@@ -31,7 +29,7 @@ public class LocalisationController {
 
 
     @GetMapping("/localise/{id}")
-    LocalisationDto getLocalisationById(Long id) throws NotFoundException {
+    LocalisationDto getLocalisationById(Long id) { // todo add @PathVariable
         Localisation localisationById = localisationService.getLocalisationById(id);
         return localisationMapping.mapToLocalisationDto(localisationById);
     }

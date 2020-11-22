@@ -1,10 +1,6 @@
-package com.sda.weather;
+package com.sda.weather.localisation;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sda.weather.localisation.Localisation;
-import com.sda.weather.localisation.LocalisationDto;
-import com.sda.weather.localisation.LocalisationRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -19,17 +15,14 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-class WeatherApplicationTests {
-
+class LocalisationIntegrationTest {
 
     @Autowired
     MockMvc mockMvc;
-
     @Autowired
     LocalisationRepository localisationRepository;
 
@@ -37,73 +30,68 @@ class WeatherApplicationTests {
 
     @Test
     void createNewLocalisation_createsNewLocalisationAndReturn201HttpStatus() throws Exception {
-        //when
+        // give
         localisationRepository.deleteAll();
-
         LocalisationDto localisationDto = new LocalisationDto(null, "Gdansk", "Polska", "54.347629", "18.6452324", "pomorskie");
-
         String content = objectMapper.writeValueAsString(localisationDto);
         MockHttpServletRequestBuilder post = post("/localise")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
 
-        //given
+        // when
         MvcResult mvcResult = mockMvc.perform(post).andReturn();
 
         //then
-
         MockHttpServletResponse response = mvcResult.getResponse();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.CREATED.value());
-        List<Localisation> all = localisationRepository.findAll();
-
-        assertThat(all.size()).isEqualTo(1);
-
-        assertThat(all.get(0)).satisfies(localisation -> {
+        List<Localisation> localisations = localisationRepository.findAll();
+        assertThat(localisations.size()).isEqualTo(1);
+        assertThat(localisations.get(0)).satisfies(localisation -> {
             assertThat(localisation.getCityName()).isEqualTo("Gdansk");
             assertThat(localisation.getCountryName()).isEqualTo("Polska");
             assertThat(localisation.getRegion()).isEqualTo("pomorskie");
+            assertThat(localisation.getLatitude()).isEqualTo("54.347629");
+            assertThat(localisation.getLongitude()).isEqualTo("18.6452324");
         });
-
-
     }
 
     @Test
-    void createNewLocalisation_whenCityOrCountryAreEmpty_returnsHttpStatus400Code() throws Exception {
+    void createNewLocalisation_whenCityIsEmpty_returnsHttpStatus400Code() throws Exception {
+        // given
         localisationRepository.deleteAll();
-
         LocalisationDto localisationDto = new LocalisationDto(null, "", "Polska", "54.347629", "18.6452324", "pomorskie");
-        LocalisationDto localisationDto2 = new LocalisationDto(null, "Gdansk", "", "54.347629", "18.6452324", "pomorskie");
-
-
         String content = objectMapper.writeValueAsString(localisationDto);
         MockHttpServletRequestBuilder post = post("/localise")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
 
-
-        String content2 = objectMapper.writeValueAsString(localisationDto2);
-        MockHttpServletRequestBuilder post2 = post("/localise")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content2);
-
-
-        //given
+        // when
         MvcResult mvcResult = mockMvc.perform(post).andReturn();
-        MvcResult mvcResult2 = mockMvc.perform(post2).andReturn();
 
-        //then
-
+        // then
         MockHttpServletResponse response = mvcResult.getResponse();
-        MockHttpServletResponse response2 = mvcResult2.getResponse();
-        List<Localisation> all = localisationRepository.findAll();
-
-
-        assertAll(() ->
-        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value()),
-                () -> assertThat(response2.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value()),
-                () -> assertThat(all).isEmpty());
-
-
+        List<Localisation> localisations = localisationRepository.findAll();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(localisations).isEmpty();
     }
 
+    @Test
+    void createNewLocalisation_whenCountryIsEmpty_returnsHttpStatus400Code() throws Exception {
+        // given
+        localisationRepository.deleteAll();
+        LocalisationDto localisationDto = new LocalisationDto(null, "Gdansk", "", "54.347629", "18.6452324", "pomorskie");
+        String content = objectMapper.writeValueAsString(localisationDto);
+        MockHttpServletRequestBuilder post = post("/localise")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(content);
+
+        // when
+        MvcResult mvcResult = mockMvc.perform(post).andReturn();
+
+        // then
+        MockHttpServletResponse response = mvcResult.getResponse();
+        List<Localisation> localisations = localisationRepository.findAll();
+        assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+        assertThat(localisations).isEmpty();
+    }
 }

@@ -10,27 +10,21 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @Slf4j
 public class ExceptionHandlerController {
 
-
     @ExceptionHandler(NoCityOrCountryException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     void noCityOrCountryHandler(NoCityOrCountryException e){
       log.error(e.getMessage());
-
     }
 
     @ExceptionHandler(CityOrCountryBlankException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     void cityOrCountryShouldNotBeBlank(CityOrCountryBlankException e){
         log.error(e.getMessage());
-
     }
-
 
     @ExceptionHandler(NoWeatherFindException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     void noWeatherFindInWebService(NoWeatherFindException e){
         log.error(e.getMessage());
-
     }
-
 }

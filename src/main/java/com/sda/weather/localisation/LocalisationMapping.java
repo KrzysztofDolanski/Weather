@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class LocalisationMapping {
 
-
-
     public LocalisationDefinition mapToLocalisationDefinition(LocalisationDto localisationDto) {
         return LocalisationDefinition.builder()
                 .cityName(localisationDto.getCityName())
@@ -19,7 +17,6 @@ public class LocalisationMapping {
                 .longitude(localisationDto.getLongitude())
                 .region(localisationDto.getRegion())
                 .build();
-
     }
 
     public LocalisationDto mapToLocalisationDto(Localisation createdLocalisation) {
@@ -31,6 +28,5 @@ public class LocalisationMapping {
                 .longitude(createdLocalisation.getLongitude())
                 .region(createdLocalisation.getRegion())
                 .build();
-
     }
 }
