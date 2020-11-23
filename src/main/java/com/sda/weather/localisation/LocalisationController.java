@@ -15,7 +15,7 @@ public class LocalisationController {
     final LocalisationMapping localisationMapping;
 
     @PostMapping("/localise")
-    ResponseEntity<LocalisationDto> createLocalisation(@RequestBody LocalisationDto localisationDto) {
+    public ResponseEntity<LocalisationDto> createLocalisation(@RequestBody LocalisationDto localisationDto) {
         LocalisationDefinition localisationDefinition = localisationMapping.mapToLocalisationDefinition(localisationDto);
         Localisation createdLocalisation = localisationService.createLocalisation(localisationDefinition);
 

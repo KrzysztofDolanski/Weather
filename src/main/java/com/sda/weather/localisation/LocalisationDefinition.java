@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LocalisationDefinition {
+
     private String cityName;
     private String countryName;
     private String latitude;

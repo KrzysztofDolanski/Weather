@@ -1,9 +1,7 @@
 package com.sda.weather.localisation;
 
 
-import com.sda.weather.exeptions.CityOrCountryBlankException;
-import com.sda.weather.exeptions.NoCityOrCountryException;
-import com.sda.weather.exeptions.NotFoundLocalisationException;
+import com.sda.weather.exeptions.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +17,8 @@ public class LocalisationService {
         String countryName = localisationDefinition.getCountryName();
         String cityName = localisationDefinition.getCityName();
         String region = localisationDefinition.getRegion();
+        String latitude = localisationDefinition.getLatitude();
+        String longitude = localisationDefinition.getLongitude();
 
         if (cityName.isEmpty() || countryName.isEmpty()) {
             throw new NoCityOrCountryException("City and Country should not be empty");
@@ -28,12 +28,20 @@ public class LocalisationService {
             throw new CityOrCountryBlankException();
         }
 
+        if (Long.parseLong(latitude)>90 ||Long.parseLong(latitude)<-90){
+            throw new LatitudeLimitValueException();
+        }
+
+        if (Long.parseLong(longitude)>180 || Long.parseLong(longitude)<-180){
+            throw new LongitudeLimitValueException();
+        }
+
         Localisation localisation = new Localisation();
         localisation.setCityName(cityName);
         localisation.setCountryName(countryName);
-        localisation.setLatitude(localisationDefinition.getLatitude());
-        localisation.setLongitude(localisationDefinition.getLongitude());
-        localisation.setRegion(localisationDefinition.getRegion());
+        localisation.setLatitude(latitude);
+        localisation.setLongitude(longitude);
+        localisation.setRegion(region);
 
         return localisationRepository.save(localisation);
     }
