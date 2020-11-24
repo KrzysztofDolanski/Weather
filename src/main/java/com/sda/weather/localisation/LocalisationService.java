@@ -28,11 +28,11 @@ public class LocalisationService {
             throw new CityOrCountryBlankException();
         }
 
-        if (Long.parseLong(latitude)>90 ||Long.parseLong(latitude)<-90){
+        if (Double.parseDouble(latitude)>90 ||Double.parseDouble(latitude)<-90){
             throw new LatitudeLimitValueException();
         }
 
-        if (Long.parseLong(longitude)>180 || Long.parseLong(longitude)<-180){
+        if (Double.parseDouble(longitude)>180 || Double.parseDouble(longitude)<-180){
             throw new LongitudeLimitValueException();
         }
 

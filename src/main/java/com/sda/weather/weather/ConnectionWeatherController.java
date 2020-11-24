@@ -11,15 +11,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ConnectionWeatherController {
 
+    final ConnectionWeatherMapping connectionWeatherMapping;
     final ConnectionWeatherService connectionWeatherService;
 
     @PostMapping("/weather/{city}")
-    public ResponseEntity<ConnectionWeather> getWeatherInCity(@PathVariable String city) {
+    public ResponseEntity<ConnectionWeatherDto> getWeatherInCity(@PathVariable String city) {
         ConnectionWeather entity = connectionWeatherService.getEntity(city);
+        ConnectionWeatherDto connectionWeatherDto = connectionWeatherMapping.mapToConnectionWeatherDto(entity);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(entity);
+                .body(connectionWeatherDto);
     }
 
 }

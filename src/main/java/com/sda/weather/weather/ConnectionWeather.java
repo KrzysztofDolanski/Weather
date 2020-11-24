@@ -22,14 +22,20 @@ public class ConnectionWeather {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String location;
-    private String current;
-    private String weather_descriptions;
 
 
+    private String name;
+    private String lat;
+    private String lon;
+    private String country;
+    private String region;
 
 
-
-
-
+    public ConnectionWeather(String name, String lat, String lon, String country, String region) {
+        this.name = name;
+        this.lat = lat;
+        this.lon = lon;
+        this.country = country;
+        this.region = region;
+    }
 }

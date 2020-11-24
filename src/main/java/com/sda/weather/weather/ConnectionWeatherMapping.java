@@ -6,11 +6,14 @@ import org.springframework.stereotype.Component;
 public class ConnectionWeatherMapping {
 
 
-    public ConnectionWeather mapToConnectionWeather(ConnectionWeatherDto connectionWeatherDto){
-        return ConnectionWeather.builder()
-                .id(connectionWeatherDto.getId())
-                .location(connectionWeatherDto.getLocation())
-                .weather_descriptions(connectionWeatherDto.getWeather_descriptions())
+    public ConnectionWeatherDto mapToConnectionWeatherDto(ConnectionWeather connectionWeather){
+        return ConnectionWeatherDto.builder()
+                .id(connectionWeather.getId())
+                .country(connectionWeather.getCountry())
+                .name(connectionWeather.getName())
+                .region(connectionWeather.getRegion())
+                .lat(connectionWeather.getLat())
+                .lon(connectionWeather.getLon())
                 .build();
     }
 }

@@ -2,14 +2,26 @@ package com.sda.weather.weather;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sda.weather.localisation.LocalisationController;
+import com.sda.weather.localisation.LocalisationRepository;
+import com.sda.weather.localisation.LocalisationService;
+import lombok.RequiredArgsConstructor;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.ConnectException;
+
 @Service
+@RequiredArgsConstructor
 public class ConnectionWeatherService {
 
     RestTemplate restTemplate = new RestTemplate();
-    ObjectMapper objectMapper = new ObjectMapper();
+
+
     ConnectionWeatherMapping connectionWeatherMapping;
     ConnectionWeatherRepository connectionWeatherRepository;
 
@@ -28,15 +40,32 @@ public class ConnectionWeatherService {
     public ConnectionWeather getEntity(String city){
 
         String body = restTemplate.getForEntity(API_2_URL + TOKEN_2 + QUERY + city, String.class).getBody();
-        try {
-            ConnectionWeatherDto connectionWeatherDto = objectMapper.readValue(body, ConnectionWeatherDto.class);
-            ConnectionWeather connectionWeather = connectionWeatherMapping.mapToConnectionWeather(connectionWeatherDto);
 
-            connectionWeatherRepository.save(connectionWeather);
+        System.err.println(body);
 
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return new ConnectionWeather();
+        JSONObject jsonObject = new JSONObject(body);
+
+        JSONObject location = jsonObject.getJSONObject("location");
+        String name = location.getString("name");
+        String country = location.getString("country");
+        String region = location.getString("region");
+        String lat = location.getString("lat");
+        String lon = location.getString("lon");
+
+        ConnectionWeather connectionWeather = ConnectionWeather.builder()
+                .id(1l)
+                .name(name)
+                .lat(lat)
+                .lon(lon)
+                .country(country)
+                .region(region)
+                .build();
+
+        return connectionWeather;
+    }
+
+
+    public void saveInDatabase(ConnectionWeather connectionWeather){
+        connectionWeatherRepository.save(connectionWeather);
     }
 }
