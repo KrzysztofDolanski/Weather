@@ -35,16 +35,13 @@ class ConnectionWeatherControllerTest {
         //when
         ConnectionWeather weatherInCity = connectionWeatherService.getEntity(city);
 
-
         //then
         assertThat(weatherInCity.getName()).isEqualTo(city);
-
     }
 
     @Test
     void tryToSaveWeatherLocationInDatabase() {
         //given
-
         ConnectionWeather build = ConnectionWeather.builder()
                 .country("Polska")
                 .lat("12")
@@ -54,7 +51,10 @@ class ConnectionWeatherControllerTest {
                 .build();
 
         //when
-        connectionWeatherService.saveInDatabase(build);
+        connectionWeatherService.saveInDatabase(build);     // todo
+                                                            // this is a unit test, so connectionWeatherRepository doesn't have a provided implementation
+                                                            // you can mock the behavior of the connectionWeatherRepository or you can write an integration tests (@SpringBootTest)
+                                                            // the integration test will launch the Spring Application, which will provide the implementation for the connectionWeatherRepository
 
         List<ConnectionWeather> all = connectionWeatherRepository.findAll();
 

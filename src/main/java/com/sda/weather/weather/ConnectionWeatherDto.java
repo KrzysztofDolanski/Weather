@@ -15,7 +15,7 @@ import javax.persistence.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConnectionWeatherDto {
+public class ConnectionWeatherDto {     // todo we want to inform the user about the weather forecast (temp, humidity, wind)
 
     private Long id;
     private String name;

@@ -5,8 +5,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConnectionWeatherMapping {
 
-
-    public ConnectionWeatherDto mapToConnectionWeatherDto(ConnectionWeather connectionWeather){
+    ConnectionWeatherDto mapToConnectionWeatherDto(ConnectionWeather connectionWeather){
         return ConnectionWeatherDto.builder()
                 .id(connectionWeather.getId())
                 .country(connectionWeather.getCountry())

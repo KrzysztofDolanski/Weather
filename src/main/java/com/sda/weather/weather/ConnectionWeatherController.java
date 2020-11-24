@@ -14,14 +14,13 @@ public class ConnectionWeatherController {
     final ConnectionWeatherMapping connectionWeatherMapping;
     final ConnectionWeatherService connectionWeatherService;
 
-    @PostMapping("/weather/{city}")
-    public ResponseEntity<ConnectionWeatherDto> getWeatherInCity(@PathVariable String city) {
-        ConnectionWeather entity = connectionWeatherService.getEntity(city);
+    @PostMapping("/weather/{city}")     // todo we want to get a forecast (not create)
+    ResponseEntity<ConnectionWeatherDto> getWeatherInCity(@PathVariable String city) {   // todo localization and period of the forecast
+        ConnectionWeather entity = connectionWeatherService.getEntity(city);    // todo rename to eg. getForecast
         ConnectionWeatherDto connectionWeatherDto = connectionWeatherMapping.mapToConnectionWeatherDto(entity);
 
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(connectionWeatherDto);
     }
-
 }
