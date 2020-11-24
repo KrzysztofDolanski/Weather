@@ -1,11 +1,8 @@
 package com.sda.weather.localisation;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Data
-@NoArgsConstructor
+
 @Component
 public class LocalisationMapping {
 
@@ -26,7 +23,7 @@ public class LocalisationMapping {
                 .countryName(createdLocalisation.getCountryName())
                 .latitude(createdLocalisation.getLatitude())
                 .longitude(createdLocalisation.getLongitude())
-                .region(createdLocalisation.getRegion())
+                .region(createdLocalisation.getRegion().orElse(null))
                 .build();
     }
 }

@@ -1,6 +1,7 @@
 package com.sda.weather.weather;
 
 import lombok.RequiredArgsConstructor;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -20,33 +21,48 @@ public class ConnectionWeatherService {
     ConnectionWeatherMapping connectionWeatherMapping;
     ConnectionWeatherRepository connectionWeatherRepository;
 
-    public ConnectionWeather getEntity(String city){
-        String body = restTemplate.getForEntity(API_2_URL + TOKEN_2 + QUERY + city, String.class).getBody();
-
+    public ConnectionWeather getForecast(String city) {
+        String body = restTemplate.getForEntity(API_URL + city + CONNECT_TO + TOKEN, String.class).getBody();
         System.err.println(body);
 
         JSONObject jsonObject = new JSONObject(body);
-        JSONObject location = jsonObject.getJSONObject("location");
-        String name = location.getString("name");
-        String country = location.getString("country");
-        String region = location.getString("region");
-        String lat = location.getString("lat");
-        String lon = location.getString("lon");
+        JSONArray list = jsonObject.getJSONArray("list");
+        Object forecast4 = list.get(3);
 
-        ConnectionWeather connectionWeather = ConnectionWeather.builder()   // todo this is not a weather forecast, use another API
-                .id(1l)
-                .name(name)
-                .lat(lat)
-                .lon(lon)
-                .country(country)
-                .region(region)
+        JSONObject jsonObject1 = new JSONObject(forecast4.toString());
+        System.err.println(jsonObject1);
+        System.out.println(jsonObject1.length());
+
+        JSONObject mainForecast = jsonObject1.getJSONObject("main");
+
+        Double temp = mainForecast.getDouble("temp");
+        Double feels_like = mainForecast.getDouble("feels_like");
+        Double temp_min = mainForecast.getDouble("temp_min");
+        Double temp_max = mainForecast.getDouble("temp_max");
+        Double pressure = mainForecast.getDouble("pressure");
+        Double sea_level = mainForecast.getDouble("sea_level");
+        Double grnd_level = mainForecast.getDouble("grnd_level");
+        Double humidity = mainForecast.getDouble("humidity");
+        Double temp_kf = mainForecast.getDouble("temp_kf");
+
+
+        ConnectionWeather connectionWeather = ConnectionWeather.builder()
+                .temp(temp)
+                .feels_like(feels_like)
+                .temp_min(temp_min)
+                .temp_max(temp_max)
+                .pressure(pressure)
+                .sea_level(sea_level)
+                .grnd_level(grnd_level)
+                .humidity(humidity)
+                .temp_kf(temp_kf)
                 .build();
 
         return connectionWeather;
     }
 
 
-    public void saveInDatabase(ConnectionWeather connectionWeather){
+    public void saveInDatabase(ConnectionWeather connectionWeather) {
         connectionWeatherRepository.save(connectionWeather);
     }
 }

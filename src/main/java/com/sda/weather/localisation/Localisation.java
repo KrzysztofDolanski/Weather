@@ -1,26 +1,30 @@
 package com.sda.weather.localisation;
 
 import lombok.Data;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+
+import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Data
-//@AllArgsConstructor
-//@NoArgsConstructor
+
 public class Localisation {
 
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
-//    @NonNull
+    @Column(nullable = false)
     private String cityName;
-    private String latitude;
-    private String longitude;
-//    @NonNull
+    @Column(nullable = false)
+    private int latitude;
+    @Column(nullable = false)
+    private int longitude;
+    @Column(nullable = false)
     private String countryName;
+    @Column(nullable = false)
     private String region;
 
+    public Optional<String> getRegion() {
+        return Optional.ofNullable(region);
+    }
 }

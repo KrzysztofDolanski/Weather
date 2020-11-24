@@ -11,17 +11,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Builder
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ConnectionWeatherDto {     // todo we want to inform the user about the weather forecast (temp, humidity, wind)
+public class ConnectionWeatherDto {
 
-    private Long id;
-    private String name;
-    private String country;
-    private String region;
-    private String lat;
-    private String lon;
+    private Double temp;
+    private Double feels_like;
+    private Double temp_min;
+    private Double temp_max;
+    private Double pressure;
+    private Double sea_level;
+    private Double grnd_level;
+    private Double humidity;
+    private Double temp_kf;
 
 }

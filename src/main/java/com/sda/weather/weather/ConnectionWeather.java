@@ -24,18 +24,13 @@ public class ConnectionWeather {
     private Long id;
 
 
-    private String name;
-    private String lat;
-    private String lon;
-    private String country;
-    private String region;
-
-
-    public ConnectionWeather(String name, String lat, String lon, String country, String region) {
-        this.name = name;
-        this.lat = lat;
-        this.lon = lon;
-        this.country = country;
-        this.region = region;
-    }
+    private Double temp;
+    private Double feels_like;
+    private Double temp_min;
+    private Double temp_max;
+    private Double pressure;
+    private Double sea_level;
+    private Double grnd_level;
+    private Double humidity;
+    private Double temp_kf;
 }

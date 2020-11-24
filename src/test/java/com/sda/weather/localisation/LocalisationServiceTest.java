@@ -30,8 +30,8 @@ class LocalisationServiceTest {
         LocalisationDefinition data = LocalisationDefinition.builder()
                 .cityName("Gdańsk")
                 .countryName("Polska")
-                .longitude("23.13")
-                .latitude("13.231")
+                .longitude(23)
+                .latitude(12)
                 .region("pomorskie")
                 .build();
 
@@ -49,8 +49,8 @@ class LocalisationServiceTest {
         LocalisationDefinition data = LocalisationDefinition.builder()
                 .cityName("")
                 .countryName("Polska")
-                .longitude("23.13")
-                .latitude("13.231")
+                .longitude(23)
+                .latitude(25)
                 .region("mazowieckie")
                 .build();
 
@@ -68,8 +68,8 @@ class LocalisationServiceTest {
         LocalisationDefinition data = LocalisationDefinition.builder()
                 .cityName("   ")
                 .countryName("Polska")
-                .longitude("23.13")
-                .latitude("13.231")
+                .longitude(53)
+                .latitude(21)
                 .region("mazowieckie")
                 .build();
 
