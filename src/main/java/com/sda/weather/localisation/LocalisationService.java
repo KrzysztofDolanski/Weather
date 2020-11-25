@@ -13,11 +13,11 @@ public class LocalisationService {
     final LocalisationRepository localisationRepository;
 
     public Localisation createLocalisation(LocalisationDefinition localisationDefinition) {
-        String countryName = localisationDefinition.getCountryName();
-        String cityName = localisationDefinition.getCityName();
+        String countryName = localisationDefinition.getCountry();
+        String cityName = localisationDefinition.getCity();
         String region = localisationDefinition.getRegion();
-        int latitude = localisationDefinition.getLatitude();
-        int longitude = localisationDefinition.getLongitude();
+        Float latitude = localisationDefinition.getLat();
+        Float longitude = localisationDefinition.getLon();
 
         if (cityName.isEmpty() || countryName.isEmpty()) {
             throw new NoCityOrCountryException("City and Country should not be empty");
@@ -29,10 +29,10 @@ public class LocalisationService {
 
 
         Localisation localisation = new Localisation();
-        localisation.setCityName(cityName);
-        localisation.setCountryName(countryName);
-        localisation.setLatitude(latitude);
-        localisation.setLongitude(longitude);
+        localisation.setCity(cityName);
+        localisation.setCountry(countryName);
+        localisation.setLat(latitude);
+        localisation.setLon(longitude);
         localisation.setRegion(region);
 
         return localisationRepository.save(localisation);

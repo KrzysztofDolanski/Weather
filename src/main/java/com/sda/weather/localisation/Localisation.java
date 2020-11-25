@@ -1,5 +1,6 @@
 package com.sda.weather.localisation;
 
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,13 +15,13 @@ public class Localisation {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
-    private String cityName;
+    private String city;
     @Column(nullable = false)
-    private int latitude;
+    private Float lat;
     @Column(nullable = false)
-    private int longitude;
+    private Float lon;
     @Column(nullable = false)
-    private String countryName;
+    private String country;
     @Column(nullable = false)
     private String region;
 

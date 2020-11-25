@@ -18,7 +18,7 @@ public class ConnectionWeatherService {
     private static final String TOKEN = "65bf43aa8dc4a2f7dc96da824bbc8205";
 
     RestTemplate restTemplate = new RestTemplate();
-    ConnectionWeatherMapping connectionWeatherMapping;
+
     ConnectionWeatherRepository connectionWeatherRepository;
 
     public ConnectionWeather getForecast(String city) {

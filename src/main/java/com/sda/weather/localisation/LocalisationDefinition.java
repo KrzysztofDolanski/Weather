@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 @Data
 public class LocalisationDefinition {
 
-    private final String cityName;
-    private final String countryName;
-    private final int latitude;
-    private final int longitude;
+    private final String city;
+    private final String country;
+    private final Float lat;
+    private final Float lon;
     private final String region;
 }

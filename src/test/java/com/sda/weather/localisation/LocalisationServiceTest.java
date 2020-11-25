@@ -28,10 +28,10 @@ class LocalisationServiceTest {
         // given
         when(localisationRepository.save(any(Localisation.class))).thenReturn(new Localisation());
         LocalisationDefinition data = LocalisationDefinition.builder()
-                .cityName("Gdańsk")
-                .countryName("Polska")
-                .longitude(23)
-                .latitude(12)
+                .city("Gdańsk")
+                .country("Polska")
+                .lon(23f)
+                .lat(12f)
                 .region("pomorskie")
                 .build();
 
@@ -47,10 +47,10 @@ class LocalisationServiceTest {
     void createLocalisation_whenCityOrCountryAreEmpty_throwsNoCityOrCountryException() {
         // given
         LocalisationDefinition data = LocalisationDefinition.builder()
-                .cityName("")
-                .countryName("Polska")
-                .longitude(23)
-                .latitude(25)
+                .city("")
+                .country("Polska")
+                .lon(23.3f)
+                .lat(25.23f)
                 .region("mazowieckie")
                 .build();
 
@@ -66,10 +66,10 @@ class LocalisationServiceTest {
     void createLocalisation_whenCityOrCountryAreBlank_throwsNoCityOrCountryException() {
         // given
         LocalisationDefinition data = LocalisationDefinition.builder()
-                .cityName("   ")
-                .countryName("Polska")
-                .longitude(53)
-                .latitude(21)
+                .city("   ")
+                .country("Polska")
+                .lon(53f)
+                .lat(21f)
                 .region("mazowieckie")
                 .build();
 

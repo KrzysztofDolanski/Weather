@@ -45,5 +45,11 @@ public class LocalisationController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/localiseCity/{city}")
+    LocalisationDto getLocalisationValues(@PathVariable String city){
+
+        return localisationMapping.mapToLocalisationDto(localisationFetchService.getLocalisationFromApi(city));
+    }
+
 }
 

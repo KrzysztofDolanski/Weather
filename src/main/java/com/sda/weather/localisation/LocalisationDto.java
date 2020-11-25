@@ -18,14 +18,14 @@ public class LocalisationDto {
     private Long id;
 
     @NotEmpty
-    private String cityName;
+    private String city;
     @NotEmpty
-    private String countryName;
+    private String country;
     @Min(-90)
     @Max(90)
-    private int latitude;
+    private Float lat;
     @Min(-90)
     @Max(90)
-    private int longitude;
+    private Float lon;
     private String region;
 }

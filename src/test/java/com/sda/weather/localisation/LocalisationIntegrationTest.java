@@ -32,7 +32,7 @@ class LocalisationIntegrationTest {
     void createNewLocalisation_createsNewLocalisationAndReturn201HttpStatus() throws Exception {
         // give
         localisationRepository.deleteAll();
-        LocalisationDto localisationDto = new LocalisationDto(null, "Gdansk", "Polska", 54, 33, "pomorskie");
+        LocalisationDto localisationDto = new LocalisationDto(null, "Gdansk", "Polska", 54f, 33f, "pomorskie");
         String content = objectMapper.writeValueAsString(localisationDto);
         MockHttpServletRequestBuilder post = post("/localise")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -47,11 +47,11 @@ class LocalisationIntegrationTest {
         List<Localisation> localisations = localisationRepository.findAll();
         assertThat(localisations.size()).isEqualTo(1);
         assertThat(localisations.get(0)).satisfies(localisation -> {
-            assertThat(localisation.getCityName()).isEqualTo("Gdansk");
-            assertThat(localisation.getCountryName()).isEqualTo("Polska");
+            assertThat(localisation.getCity()).isEqualTo("Gdansk");
+            assertThat(localisation.getCountry()).isEqualTo("Polska");
             assertThat(localisation.getRegion()).isEqualTo("pomorskie");
-            assertThat(localisation.getLatitude()).isEqualTo("54.347629");
-            assertThat(localisation.getLongitude()).isEqualTo("18.6452324");
+            assertThat(localisation.getLat()).isEqualTo("54.347629");
+            assertThat(localisation.getLon()).isEqualTo("18.6452324");
         });
     }
 
@@ -59,7 +59,7 @@ class LocalisationIntegrationTest {
     void createNewLocalisation_whenCityIsEmpty_returnsHttpStatus400Code() throws Exception {
         // given
         localisationRepository.deleteAll();
-        LocalisationDto localisationDto = new LocalisationDto(null, "", "Polska", 32, 11, "pomorskie");
+        LocalisationDto localisationDto = new LocalisationDto(null, "", "Polska", 32.23f, 11f, "pomorskie");
         String content = objectMapper.writeValueAsString(localisationDto);
         MockHttpServletRequestBuilder post = post("/localise")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -79,7 +79,7 @@ class LocalisationIntegrationTest {
     void createNewLocalisation_whenCountryIsEmpty_returnsHttpStatus400Code() throws Exception {
         // given
         localisationRepository.deleteAll();
-        LocalisationDto localisationDto = new LocalisationDto(null, "Gdansk", "", 23, 87, "pomorskie");
+        LocalisationDto localisationDto = new LocalisationDto(null, "Gdansk", "", 23f, 87f, "pomorskie");
         String content = objectMapper.writeValueAsString(localisationDto);
         MockHttpServletRequestBuilder post = post("/localise")
                 .contentType(MediaType.APPLICATION_JSON)

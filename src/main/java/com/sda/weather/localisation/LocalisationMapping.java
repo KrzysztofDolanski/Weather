@@ -8,10 +8,10 @@ public class LocalisationMapping {
 
     public LocalisationDefinition mapToLocalisationDefinition(LocalisationDto localisationDto) {
         return LocalisationDefinition.builder()
-                .cityName(localisationDto.getCityName())
-                .countryName(localisationDto.getCountryName())
-                .latitude(localisationDto.getLatitude())
-                .longitude(localisationDto.getLongitude())
+                .city(localisationDto.getCity())
+                .country(localisationDto.getCountry())
+                .lat(localisationDto.getLat())
+                .lon(localisationDto.getLon())
                 .region(localisationDto.getRegion())
                 .build();
     }
@@ -19,10 +19,10 @@ public class LocalisationMapping {
     public LocalisationDto mapToLocalisationDto(Localisation createdLocalisation) {
         return LocalisationDto.builder()
                 .id(createdLocalisation.getId())
-                .cityName(createdLocalisation.getCityName())
-                .countryName(createdLocalisation.getCountryName())
-                .latitude(createdLocalisation.getLatitude())
-                .longitude(createdLocalisation.getLongitude())
+                .city(createdLocalisation.getCity())
+                .country(createdLocalisation.getCountry())
+                .lat(createdLocalisation.getLat())
+                .lon(createdLocalisation.getLon())
                 .region(createdLocalisation.getRegion().orElse(null))
                 .build();
     }
