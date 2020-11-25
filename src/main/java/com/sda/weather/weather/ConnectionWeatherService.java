@@ -5,6 +5,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Service
 @RequiredArgsConstructor
@@ -18,12 +20,12 @@ public class ConnectionWeatherService {
     private static final String TOKEN = "65bf43aa8dc4a2f7dc96da824bbc8205";
 
     RestTemplate restTemplate = new RestTemplate();
-
+    APIConfiguration apiConfiguration;
     ConnectionWeatherRepository connectionWeatherRepository;
 
     public ConnectionWeather getForecast(String city) {
+
         String body = restTemplate.getForEntity(API_URL + city + CONNECT_TO + TOKEN, String.class).getBody();
-        System.err.println(body);
 
         JSONObject jsonObject = new JSONObject(body);
         JSONArray list = jsonObject.getJSONArray("list");
@@ -44,7 +46,6 @@ public class ConnectionWeatherService {
         Double grnd_level = mainForecast.getDouble("grnd_level");
         Double humidity = mainForecast.getDouble("humidity");
         Double temp_kf = mainForecast.getDouble("temp_kf");
-
 
         ConnectionWeather connectionWeather = ConnectionWeather.builder()
                 .temp(temp)

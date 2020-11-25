@@ -25,5 +25,15 @@ public class ConnectionWeatherController {
                 .body(connectionWeatherDto);
     }
 
+    @GetMapping("/weatherCelsius/{city}")
+    ResponseEntity<ConnectionWeatherDto> getWeatherInCelsiusFromCity(@PathVariable String city) {
+        ConnectionWeather entity = connectionWeatherService.getForecast(city);
+        ConnectionWeatherDto connectionWeatherDto = connectionWeatherMapping.mapToConnectionWeatherDtoInCelsius(entity);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(connectionWeatherDto);
+    }
+
 
 }
