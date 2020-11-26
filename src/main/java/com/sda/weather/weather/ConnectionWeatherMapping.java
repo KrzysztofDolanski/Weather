@@ -1,5 +1,6 @@
 package com.sda.weather.weather;
 
+import org.apache.commons.math3.util.Precision;
 import org.springframework.stereotype.Component;
 
 import java.text.DecimalFormat;
@@ -9,32 +10,32 @@ public class ConnectionWeatherMapping {
 
     ConnectionWeatherDto mapToConnectionWeatherDto(ConnectionWeather connectionWeather) {
         return ConnectionWeatherDto.builder()
-                .temp(connectionWeather.getTemp())
-                .feels_like(connectionWeather.getFeels_like())
-                .temp_min(connectionWeather.getTemp_min())
-                .temp_max(connectionWeather.getTemp())
-                .pressure(connectionWeather.getPressure())
-                .sea_level(connectionWeather.getSea_level())
-                .grnd_level(connectionWeather.getGrnd_level())
-                .humidity(connectionWeather.getHumidity())
-                .temp_kf(connectionWeather.getTemp_kf())
+                .temp(Precision.round(connectionWeather.getTemp(), 2))
+                .feels_like(Precision.round(connectionWeather.getFeels_like(), 2))
+                .temp_min(Precision.round(connectionWeather.getTemp_min(), 2))
+                .temp_max(Precision.round(connectionWeather.getTemp(), 2))
+                .pressure(Precision.round(connectionWeather.getPressure(), 2))
+                .sea_level(Precision.round(connectionWeather.getSea_level(), 2))
+                .grnd_level(Precision.round(connectionWeather.getGrnd_level(), 2))
+                .humidity(Precision.round(connectionWeather.getHumidity(), 2))
+                .temp_kf(Precision.round(connectionWeather.getTemp_kf(), 2))
                 .build();
     }
 
-    DecimalFormat df = new DecimalFormat("#.##");
+
 
     ConnectionWeatherDto mapToConnectionWeatherDtoInCelsius(ConnectionWeather connectionWeather) {
        TemperatureCalculator temperatureCalculator = new TemperatureCalculator();
         return ConnectionWeatherDto.builder()
-                .temp(temperatureCalculator.fromKelwinToCelsius(connectionWeather.getTemp()))
-                .feels_like(temperatureCalculator.fromKelwinToCelsius(connectionWeather.getFeels_like()))
-                .temp_min(temperatureCalculator.fromKelwinToCelsius(connectionWeather.getTemp_min()))
-                .temp_max(temperatureCalculator.fromKelwinToCelsius(connectionWeather.getTemp()))
-                .pressure(connectionWeather.getPressure())
-                .sea_level(connectionWeather.getSea_level())
-                .grnd_level(connectionWeather.getGrnd_level())
-                .humidity(connectionWeather.getHumidity())
-                .temp_kf(connectionWeather.getTemp_kf())
+                .temp(Precision.round(temperatureCalculator.fromKelwinToCelsius(connectionWeather.getTemp()), 2))
+                .feels_like(Precision.round(temperatureCalculator.fromKelwinToCelsius(connectionWeather.getFeels_like()), 2))
+                .temp_min(Precision.round(temperatureCalculator.fromKelwinToCelsius(connectionWeather.getTemp_min()), 2))
+                .temp_max(Precision.round(temperatureCalculator.fromKelwinToCelsius(connectionWeather.getTemp()), 2))
+                .pressure(Precision.round(connectionWeather.getPressure(), 2))
+                .sea_level(Precision.round(connectionWeather.getSea_level(), 2))
+                .grnd_level(Precision.round(connectionWeather.getGrnd_level(), 2))
+                .humidity(Precision.round(connectionWeather.getHumidity(), 2))
+                .temp_kf(Precision.round(connectionWeather.getTemp_kf(), 2))
                 .build();
     }
 

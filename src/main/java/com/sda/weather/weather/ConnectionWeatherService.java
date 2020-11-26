@@ -1,12 +1,16 @@
 package com.sda.weather.weather;
 
+import com.sda.weather.exeptions.CityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.math3.util.Precision;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.text.DecimalFormat;
 
 @Service
 @RequiredArgsConstructor
@@ -25,8 +29,16 @@ public class ConnectionWeatherService {
 
     public ConnectionWeather getForecast(String city) {
 
-        String body = restTemplate.getForEntity(API_URL + city + CONNECT_TO + TOKEN, String.class).getBody();
 
+        String body = null;
+
+        try {
+        body = restTemplate.getForEntity(API_URL + city + CONNECT_TO + TOKEN, String.class).getBody();
+
+        } catch (CityNotFoundException e){
+            System.err.println(e);
+
+        }
         JSONObject jsonObject = new JSONObject(body);
         JSONArray list = jsonObject.getJSONArray("list");
 
@@ -72,6 +84,7 @@ public class ConnectionWeatherService {
 //        grnd_level = mainForecast.getDouble("grnd_level");
 //        humidity = mainForecast.getDouble("humidity");
 //        temp_kf = mainForecast.getDouble("temp_kf");
+
 
         ConnectionWeather connectionWeather = ConnectionWeather.builder()
                 .temp(temp/list.length())
