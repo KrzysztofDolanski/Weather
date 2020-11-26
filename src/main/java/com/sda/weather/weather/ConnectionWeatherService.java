@@ -29,34 +29,60 @@ public class ConnectionWeatherService {
 
         JSONObject jsonObject = new JSONObject(body);
         JSONArray list = jsonObject.getJSONArray("list");
-        Object forecast4 = list.get(3);
 
-        JSONObject jsonObject1 = new JSONObject(forecast4.toString());
-        System.err.println(jsonObject1);
-        System.out.println(jsonObject1.length());
+        Double temp = 0.0;
+        Double feels_like = 0.0;
+        Double temp_min = 0.0;
+        Double temp_max = 0.0;
+        Double pressure = 0.0;
+        Double sea_level = 0.0;
+        Double grnd_level = 0.0;
+        Double humidity = 0.0;
+        Double temp_kf = 0.0;
 
-        JSONObject mainForecast = jsonObject1.getJSONObject("main");
+        for (Object o : list) {
+            JSONObject jsonObject2 = new JSONObject(o.toString());
+            JSONObject main = jsonObject2.getJSONObject("main");
 
-        Double temp = mainForecast.getDouble("temp");
-        Double feels_like = mainForecast.getDouble("feels_like");
-        Double temp_min = mainForecast.getDouble("temp_min");
-        Double temp_max = mainForecast.getDouble("temp_max");
-        Double pressure = mainForecast.getDouble("pressure");
-        Double sea_level = mainForecast.getDouble("sea_level");
-        Double grnd_level = mainForecast.getDouble("grnd_level");
-        Double humidity = mainForecast.getDouble("humidity");
-        Double temp_kf = mainForecast.getDouble("temp_kf");
+            temp += main.getDouble("temp");
+            feels_like += main.getDouble("feels_like");
+            temp_min += main.getDouble("temp_min");
+            temp_max += main.getDouble("temp_max");
+            pressure += main.getDouble("pressure");
+            sea_level += main.getDouble("sea_level");
+            grnd_level += main.getDouble("grnd_level");
+            humidity += main.getDouble("humidity");
+            temp_kf += main.getDouble("temp_kf");
+        }
+
+//        Object forecast4 = list.get(3);
+
+////        JSONObject jsonObject1 = new JSONObject(forecast4.toString());
+//        System.err.println(jsonObject1);
+//        System.out.println(jsonObject1.length());
+
+//        JSONObject mainForecast = jsonObject1.getJSONObject("main");
+
+//        temp = mainForecast.getDouble("temp");
+//        feels_like = mainForecast.getDouble("feels_like");
+//        temp_min = mainForecast.getDouble("temp_min");
+//        temp_max = mainForecast.getDouble("temp_max");
+//        pressure = mainForecast.getDouble("pressure");
+//        sea_level = mainForecast.getDouble("sea_level");
+//        grnd_level = mainForecast.getDouble("grnd_level");
+//        humidity = mainForecast.getDouble("humidity");
+//        temp_kf = mainForecast.getDouble("temp_kf");
 
         ConnectionWeather connectionWeather = ConnectionWeather.builder()
-                .temp(temp)
-                .feels_like(feels_like)
-                .temp_min(temp_min)
-                .temp_max(temp_max)
-                .pressure(pressure)
-                .sea_level(sea_level)
-                .grnd_level(grnd_level)
-                .humidity(humidity)
-                .temp_kf(temp_kf)
+                .temp(temp/list.length())
+                .feels_like(feels_like/list.length())
+                .temp_min(temp_min/list.length())
+                .temp_max(temp_max/list.length())
+                .pressure(pressure/list.length())
+                .sea_level(sea_level/list.length())
+                .grnd_level(grnd_level/list.length())
+                .humidity(humidity/list.length())
+                .temp_kf(temp_kf/list.length())
                 .build();
 
         return connectionWeather;
