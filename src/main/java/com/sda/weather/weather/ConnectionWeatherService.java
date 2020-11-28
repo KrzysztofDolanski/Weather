@@ -67,25 +67,6 @@ public class ConnectionWeatherService {
             temp_kf += main.getDouble("temp_kf");
         }
 
-//        Object forecast4 = list.get(3);
-
-////        JSONObject jsonObject1 = new JSONObject(forecast4.toString());
-//        System.err.println(jsonObject1);
-//        System.out.println(jsonObject1.length());
-
-//        JSONObject mainForecast = jsonObject1.getJSONObject("main");
-
-//        temp = mainForecast.getDouble("temp");
-//        feels_like = mainForecast.getDouble("feels_like");
-//        temp_min = mainForecast.getDouble("temp_min");
-//        temp_max = mainForecast.getDouble("temp_max");
-//        pressure = mainForecast.getDouble("pressure");
-//        sea_level = mainForecast.getDouble("sea_level");
-//        grnd_level = mainForecast.getDouble("grnd_level");
-//        humidity = mainForecast.getDouble("humidity");
-//        temp_kf = mainForecast.getDouble("temp_kf");
-
-
         ConnectionWeather connectionWeather = ConnectionWeather.builder()
                 .temp(temp/list.length())
                 .feels_like(feels_like/list.length())

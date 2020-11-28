@@ -83,7 +83,6 @@ class ConnectionWeatherControllerTest {
         // you can mock the behavior of the connectionWeatherRepository
         // the integration test will launch the Spring Application, which will provide the implementation for the connectionWeatherRepository
 
-
         //then
         assertThat(byId.get().getTemp()).isEqualTo(london.getTemp());
 
