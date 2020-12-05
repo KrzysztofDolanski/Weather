@@ -16,9 +16,6 @@ import java.text.DecimalFormat;
 @RequiredArgsConstructor
 public class ConnectionWeatherService {
 
-    private static final String API_2_URL = "http://api.weatherstack.com/current?access_key=";
-    private static final String TOKEN_2 = "35159824095457c4e2741bb6604b0ce3";
-    private static final String QUERY = "&query=";
     private static final String API_URL = "http://api.openweathermap.org/data/2.5/forecast?q=";
     private static final String CONNECT_TO = "&appid=";
     private static final String TOKEN = "65bf43aa8dc4a2f7dc96da824bbc8205";
@@ -28,14 +25,14 @@ public class ConnectionWeatherService {
     ConnectionWeatherRepository connectionWeatherRepository;
 
     public ConnectionWeather getForecast(String city) {
-
-
         String body = null;
 
-        try {
-        body = restTemplate.getForEntity(API_URL + city + CONNECT_TO + TOKEN, String.class).getBody();
+        // todo check if Localization exists in our database
 
-        } catch (CityNotFoundException e){
+        try {
+            // todo check status code of a response
+            body = restTemplate.getForEntity(API_URL + city + CONNECT_TO + TOKEN, String.class).getBody();
+        } catch (CityNotFoundException e) {
             System.err.println(e);
 
         }
@@ -68,22 +65,24 @@ public class ConnectionWeatherService {
         }
 
         ConnectionWeather connectionWeather = ConnectionWeather.builder()
-                .temp(temp/list.length())
-                .feels_like(feels_like/list.length())
-                .temp_min(temp_min/list.length())
-                .temp_max(temp_max/list.length())
-                .pressure(pressure/list.length())
-                .sea_level(sea_level/list.length())
-                .grnd_level(grnd_level/list.length())
-                .humidity(humidity/list.length())
-                .temp_kf(temp_kf/list.length())
+                .temp(temp / list.length())
+                .feels_like(feels_like / list.length())
+                .temp_min(temp_min / list.length())
+                .temp_max(temp_max / list.length())
+                .pressure(pressure / list.length())
+                .sea_level(sea_level / list.length())
+                .grnd_level(grnd_level / list.length())
+                .humidity(humidity / list.length())
+                .temp_kf(temp_kf / list.length())
                 .build();
+
+        // todo save ConnectionWeather to the database (relation with Localization!)
 
         return connectionWeather;
     }
 
 
-    public void saveInDatabase(ConnectionWeather connectionWeather) {
+    public void saveInDatabase(ConnectionWeather connectionWeather) {   // todo remove if unnecessary
         connectionWeatherRepository.save(connectionWeather);
     }
 }

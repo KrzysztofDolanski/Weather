@@ -14,7 +14,6 @@ import javax.persistence.Id;
 @Builder
 @Entity
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class ConnectionWeather {
@@ -23,9 +22,8 @@ public class ConnectionWeather {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
-    private Double temp;
-    private Double feels_like;
+    private Double temp;        // todo rename -> temperature
+    private Double feels_like;  // todo adjust these variables to the requirements
     private Double temp_min;
     private Double temp_max;
     private Double pressure;

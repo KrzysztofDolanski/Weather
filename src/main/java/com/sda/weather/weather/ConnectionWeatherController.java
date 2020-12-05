@@ -34,6 +34,4 @@ public class ConnectionWeatherController {
                 .status(HttpStatus.OK)
                 .body(connectionWeatherDto);
     }
-
-
 }
