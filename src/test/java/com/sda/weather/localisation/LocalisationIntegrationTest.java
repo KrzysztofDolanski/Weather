@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @SpringBootTest
@@ -26,7 +27,8 @@ class LocalisationIntegrationTest {
     @Autowired
     LocalisationRepository localisationRepository;
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Test
     void createNewLocalisation_createsNewLocalisationAndReturn201HttpStatus() throws Exception {
@@ -93,5 +95,6 @@ class LocalisationIntegrationTest {
         List<Localisation> localisations = localisationRepository.findAll();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
         assertThat(localisations).isEmpty();
+        
     }
 }

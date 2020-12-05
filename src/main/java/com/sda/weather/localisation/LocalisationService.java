@@ -27,7 +27,6 @@ public class LocalisationService {
             throw new CityOrCountryBlankException();
         }
 
-
         Localisation localisation = new Localisation();
         localisation.setCity(cityName);
         localisation.setCountry(countryName);

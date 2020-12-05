@@ -47,7 +47,6 @@ public class LocalisationController {
 
     @GetMapping("/localiseCity/{city}")
     LocalisationDto getLocalisationValues(@PathVariable String city){
-
         return localisationMapping.mapToLocalisationDto(localisationFetchService.getLocalisationFromApi(city));
     }
 

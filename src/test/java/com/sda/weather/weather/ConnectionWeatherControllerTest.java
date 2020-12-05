@@ -44,7 +44,8 @@ class ConnectionWeatherControllerTest {
     @InjectMocks
     ConnectionWeatherService connectionWeatherService;
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Test
     void tryToGetWeatherFromApi() {

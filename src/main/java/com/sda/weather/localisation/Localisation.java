@@ -1,9 +1,12 @@
 package com.sda.weather.localisation;
 
+import com.sda.weather.forecast.Forecast;
 import lombok.Builder;
 import lombok.Data;
+import org.hibernate.validator.constraints.LuhnCheck;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Optional;
 
 @Entity
@@ -12,7 +15,7 @@ import java.util.Optional;
 public class Localisation {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String city;
@@ -28,4 +31,7 @@ public class Localisation {
     public Optional<String> getRegion() {
         return Optional.ofNullable(region);
     }
+
+//    @OneToMany
+//    List<Forecast> forecast;
 }

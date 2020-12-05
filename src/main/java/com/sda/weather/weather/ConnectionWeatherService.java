@@ -1,16 +1,14 @@
 package com.sda.weather.weather;
 
+import com.sda.weather.APIConfiguration;
 import com.sda.weather.exeptions.CityNotFoundException;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.math3.util.Precision;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
-
-import java.text.DecimalFormat;
 
 @Service
 @RequiredArgsConstructor
@@ -21,20 +19,17 @@ public class ConnectionWeatherService {
     private static final String TOKEN = "65bf43aa8dc4a2f7dc96da824bbc8205";
 
     RestTemplate restTemplate = new RestTemplate();
-    APIConfiguration apiConfiguration;
+
     ConnectionWeatherRepository connectionWeatherRepository;
 
     public ConnectionWeather getForecast(String city) {
         String body = null;
-
         // todo check if Localization exists in our database
-
         try {
             // todo check status code of a response
             body = restTemplate.getForEntity(API_URL + city + CONNECT_TO + TOKEN, String.class).getBody();
         } catch (CityNotFoundException e) {
             System.err.println(e);
-
         }
         JSONObject jsonObject = new JSONObject(body);
         JSONArray list = jsonObject.getJSONArray("list");
@@ -75,12 +70,9 @@ public class ConnectionWeatherService {
                 .humidity(humidity / list.length())
                 .temp_kf(temp_kf / list.length())
                 .build();
-
         // todo save ConnectionWeather to the database (relation with Localization!)
-
         return connectionWeather;
     }
-
 
     public void saveInDatabase(ConnectionWeather connectionWeather) {   // todo remove if unnecessary
         connectionWeatherRepository.save(connectionWeather);

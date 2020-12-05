@@ -138,7 +138,7 @@ class ConnectionWeatherServiceTest {
 
         //then
 
-        assertThat(temp).isGreaterThan(-98);
+        assertThat(temp).isGreaterThan(-371.15);
     }
 }
 
