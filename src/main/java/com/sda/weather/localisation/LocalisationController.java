@@ -44,11 +44,14 @@ public class LocalisationController {
                 .map(localisationMapping::mapToLocalisationDto)
                 .collect(Collectors.toList());
     }
+/*//
+//
+//    @PostMapping("/localiseCity/{city}")
+//    LocalisationDto getLocalisationValues(@PathVariable String city){
+//        return localisationMapping.mapToLocalisationDto(localisationFetchService.getLocalisationFromApi(city));
+//    }
+//
 
-    @GetMapping("/localiseCity/{city}")
-    LocalisationDto getLocalisationValues(@PathVariable String city){
-        return localisationMapping.mapToLocalisationDto(localisationFetchService.getLocalisationFromApi(city));
-    }
-
+ */
 }
 

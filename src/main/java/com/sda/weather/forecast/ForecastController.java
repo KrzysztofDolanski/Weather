@@ -1,5 +1,6 @@
 package com.sda.weather.forecast;
 
+import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +15,15 @@ public class ForecastController {
     private final ForecastService forecastService;
     private final ForecastMapping forecastMapping;
 
-    @GetMapping("localise/{id}")
-    ForecastDto getForecast(@PathVariable Long id, @RequestParam(required = false) String period) {
-        Forecast forecast = forecastService.getForecast(id, period);
+    @GetMapping("localise/forecast/{city}")
+    ForecastDto getForecast(@PathVariable String city) {
+
+        Forecast forecast = null;
+        try {
+            forecast = forecastService.getForecast(city);
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        }
 
         return forecastMapping.mapToForecastDto(forecast);
     }

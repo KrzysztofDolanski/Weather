@@ -2,11 +2,17 @@ package com.sda.weather.forecast;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
 public class ForecastOpenWeatherResponse {
+
+
+    String cod;
+    String message;
+    String cnt;
 
     private CityResponse city;
     private List<SingleForecast> list;
@@ -14,6 +20,7 @@ public class ForecastOpenWeatherResponse {
 
     @Data
     public static class SingleForecast {
+
         Long dt;
         MainForecast main;
         List<Weather> weather;
@@ -21,6 +28,8 @@ public class ForecastOpenWeatherResponse {
         Wind wind;
         Double visibility;
         Double pop;
+        Rain rain;
+        Snow snow;
         Sys sys;
         @JsonProperty("dt_txt")
         String date;
@@ -61,8 +70,8 @@ public class ForecastOpenWeatherResponse {
     }
 
     @Data
-    public static class Sys{
-        private String pop;
+    public static class Sys {
+        private String pod;
     }
 
     @Data
@@ -77,5 +86,21 @@ public class ForecastOpenWeatherResponse {
             private double lat;
             private double lon;
         }
+
+        private String country;
+        private long population;
+        private long timezone;
+        private long sunrise;
+        private long sunset;
+    }
+
+    @NoArgsConstructor
+    public static class Rain{
+        private double _3h;
+    }
+
+    @NoArgsConstructor
+    public static class Snow{
+        private double _3h;
     }
 }
