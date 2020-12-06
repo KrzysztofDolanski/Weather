@@ -21,10 +21,9 @@ public class ForecastService {
     RestTemplate restTemplate = new RestTemplate();
 
     @Autowired
-    ObjectMapper objectMapper;
+    ObjectMapper objectMapper; // todo make final
 
     public Forecast getForecast(Long id, String period) {
-
         Localisation localisation = localisationFetchService.getLocalisation(id);
 
         String city = localisation.getCity();
@@ -40,6 +39,7 @@ public class ForecastService {
         String body = forEntity.getBody();
 
         try {
+            // todo exception is thrown here
             ForecastOpenWeatherResponse forecastOpenWeatherResponse = objectMapper.readValue(body, ForecastOpenWeatherResponse.class);
 
             List<ForecastOpenWeatherResponse.SingleForecast> list = forecastOpenWeatherResponse.getList();
@@ -64,6 +64,4 @@ public class ForecastService {
 
         return null;
     }
-
-
 }

@@ -30,9 +30,10 @@ public class LocalisationFetchService {
 
     public Localisation getLocalisation(Long id) {
         return localisationRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Cant localize localisation no" + id));
+                .orElseThrow(() -> new NotFoundException("Cant localize localisation no" + id)); // todo use your own exception
     }
 
+    // todo to remove
     Localisation getLocalisationFromApi(String city) {
 
         String uri = UriComponentsBuilder.newInstance()

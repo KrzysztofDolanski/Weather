@@ -18,11 +18,10 @@ public class APIConfiguration {
     String token;
     String query;
 
-
     @Bean
-    ObjectMapper objectMapper(){
+    ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES,false);
+        objectMapper.configure(DeserializationFeature.FAIL_ON_IGNORED_PROPERTIES, false);
         return objectMapper;
     }
 }
