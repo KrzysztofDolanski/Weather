@@ -30,7 +30,6 @@ public class LocalisationController {
                 .body(localisationMapping.mapToLocalisationDto(createdLocalisation));
     }
 
-
     @GetMapping("/localise/{id}")
     LocalisationDto getLocalisationById(@PathVariable @Min(1) Long id) {
         Localisation localisationById = localisationFetchService.getLocalisation(id);
@@ -44,14 +43,12 @@ public class LocalisationController {
                 .map(localisationMapping::mapToLocalisationDto)
                 .collect(Collectors.toList());
     }
-/*//
-//
-//    @PostMapping("/localiseCity/{city}")
-//    LocalisationDto getLocalisationValues(@PathVariable String city){
-//        return localisationMapping.mapToLocalisationDto(localisationFetchService.getLocalisationFromApi(city));
-//    }
-//
 
- */
+    // todo to remove
+    @GetMapping("/localiseCity/{city}")
+    LocalisationDto getLocalisationValues(@PathVariable String city){
+        return localisationMapping.mapToLocalisationDto(localisationFetchService.getLocalisationFromApi(city));
+    }
+
 }
 

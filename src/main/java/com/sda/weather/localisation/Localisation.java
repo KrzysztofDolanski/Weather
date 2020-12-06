@@ -25,7 +25,7 @@ public class Localisation {
     private Float lon;
     @Column(nullable = false)
     private String country;
-    @Column(nullable = false)
+    @Column(nullable = false) // todo region can be blank
     private String region;
 
     public Optional<String> getRegion() {

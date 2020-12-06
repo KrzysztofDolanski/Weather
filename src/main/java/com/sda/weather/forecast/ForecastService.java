@@ -1,12 +1,9 @@
 package com.sda.weather.forecast;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sda.weather.APIConfiguration;
 import com.sda.weather.localisation.Localisation;
 import com.sda.weather.localisation.LocalisationFetchService;
-import javassist.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,16 +21,13 @@ public class ForecastService {
     private final LocalisationFetchService localisationFetchService;
     RestTemplate restTemplate = new RestTemplate();
 
-    APIConfiguration apiConfiguration;
+    @Autowired
+    ObjectMapper objectMapper; // todo make final
 
-    private final ObjectMapper objectMapper;
+    public Forecast getForecast(Long id, String period) {
+        Localisation localisation = localisationFetchService.getLocalisation(id);
 
-    public Forecast getForecast(String city) throws NotFoundException {
-        Long period;
-
-//        Localisation localisation = localisationFetchService.getLocalisation(1l);
-//        String city = localisation.getCity();
-
+        String city = localisation.getCity();
 
         String uri = UriComponentsBuilder.newInstance()
                 .scheme("http")
@@ -43,18 +37,11 @@ public class ForecastService {
                 .build().toUriString();
 
         ResponseEntity<String> forEntity = restTemplate.getForEntity(uri, String.class);
-
-        if (!forEntity.getStatusCode().is2xxSuccessful()){
-            throw new NotFoundException("Something go wrong, try another city");
-        }
-
         String body = forEntity.getBody();
 
         try {
+            // todo exception is thrown here
             ForecastOpenWeatherResponse forecastOpenWeatherResponse = objectMapper.readValue(body, ForecastOpenWeatherResponse.class);
-
-
-
 
             List<ForecastOpenWeatherResponse.SingleForecast> list = forecastOpenWeatherResponse.getList();
 
@@ -72,7 +59,6 @@ public class ForecastService {
                             .windSpeed(list.get(i).getWind().getSpeed())
                             .date(list.get(i).getDate())
                             .build();
-
                 }
             }
 

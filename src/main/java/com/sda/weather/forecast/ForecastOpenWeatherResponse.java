@@ -17,7 +17,6 @@ public class ForecastOpenWeatherResponse {
     private CityResponse city;
     private List<SingleForecast> list;
 
-
     @Data
     public static class SingleForecast {
 
