@@ -1,6 +1,10 @@
 package com.sda.weather.localisation;
 
 
+import com.sda.weather.forecast.Forecast;
+import com.sda.weather.forecast.ForecastDto;
+import com.sda.weather.weather.ConnectionWeather;
+import com.sda.weather.weather.ConnectionWeatherDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,4 +32,5 @@ public class LocalisationDto {
     @Max(90)
     private Float lon;
     private String region;
+
 }

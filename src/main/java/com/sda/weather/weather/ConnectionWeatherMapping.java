@@ -3,8 +3,6 @@ package com.sda.weather.weather;
 import org.apache.commons.math3.util.Precision;
 import org.springframework.stereotype.Component;
 
-import java.text.DecimalFormat;
-
 @Component
 public class ConnectionWeatherMapping {
 
@@ -23,9 +21,8 @@ public class ConnectionWeatherMapping {
     }
 
 
-
     ConnectionWeatherDto mapToConnectionWeatherDtoInCelsius(ConnectionWeather connectionWeather) {
-       TemperatureCalculator temperatureCalculator = new TemperatureCalculator();
+        TemperatureCalculator temperatureCalculator = new TemperatureCalculator();
         return ConnectionWeatherDto.builder()
                 .temp(Precision.round(temperatureCalculator.fromKelwinToCelsius(connectionWeather.getTemp()), 2))
                 .feels_like(Precision.round(temperatureCalculator.fromKelwinToCelsius(connectionWeather.getFeels_like()), 2))
@@ -36,6 +33,21 @@ public class ConnectionWeatherMapping {
                 .grnd_level(Precision.round(connectionWeather.getGrnd_level(), 2))
                 .humidity(Precision.round(connectionWeather.getHumidity(), 2))
                 .temp_kf(Precision.round(connectionWeather.getTemp_kf(), 2))
+                .build();
+    }
+
+
+    ConnectionWeather mapToConnectionWeather(ConnectionWeatherDto connectionWeatherDto) {
+        return ConnectionWeather.builder()
+                .temp(connectionWeatherDto.getTemp())
+                .feels_like(connectionWeatherDto.getFeels_like())
+                .temp_min(connectionWeatherDto.getTemp_min())
+                .temp_max(connectionWeatherDto.getTemp_max())
+                .pressure(connectionWeatherDto.getPressure())
+                .sea_level(connectionWeatherDto.getSea_level())
+                .grnd_level(connectionWeatherDto.getGrnd_level())
+                .humidity(connectionWeatherDto.getHumidity())
+                .temp_kf(connectionWeatherDto.getTemp_kf())
                 .build();
     }
 

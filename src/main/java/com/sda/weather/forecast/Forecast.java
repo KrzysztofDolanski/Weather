@@ -1,6 +1,7 @@
 package com.sda.weather.forecast;
 
 import com.sda.weather.localisation.Localisation;
+import com.sda.weather.weather.ConnectionWeather;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,6 +27,10 @@ public class Forecast {
     String date;
 
     @ManyToOne
+    @MapKey(name = "id")
     Localisation localisation;
+
+    @ManyToOne
+    ConnectionWeather connectionWeather;
 
 }

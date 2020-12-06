@@ -23,8 +23,8 @@ public class LocalisationService {
             throw new NoCityOrCountryException("City and Country should not be empty");
         }
 
-        // todo region can be blank
-        if (cityName.isBlank() || countryName.isBlank() || region.isBlank()) {
+
+        if (cityName.isBlank() || countryName.isBlank()) {
             throw new CityOrCountryBlankException();
         }
 

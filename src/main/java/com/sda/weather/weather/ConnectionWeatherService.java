@@ -24,9 +24,8 @@ public class ConnectionWeatherService {
 
     public ConnectionWeather getForecast(String city) {
         String body = null;
-        // todo check if Localization exists in our database
+
         try {
-            // todo check status code of a response
             body = restTemplate.getForEntity(API_URL + city + CONNECT_TO + TOKEN, String.class).getBody();
         } catch (CityNotFoundException e) {
             System.err.println(e);
@@ -70,11 +69,7 @@ public class ConnectionWeatherService {
                 .humidity(humidity / list.length())
                 .temp_kf(temp_kf / list.length())
                 .build();
-        // todo save ConnectionWeather to the database (relation with Localization!)
         return connectionWeather;
     }
 
-    public void saveInDatabase(ConnectionWeather connectionWeather) {   // todo remove if unnecessary
-        connectionWeatherRepository.save(connectionWeather);
-    }
 }

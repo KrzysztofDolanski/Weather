@@ -1,5 +1,6 @@
 package com.sda.weather.forecast;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,12 +13,18 @@ public class ForecastController {
 
     private final ForecastService forecastService;
     private final ForecastMapping forecastMapping;
+    private final ForecastSaveToDataBase forecastSaveToDataBase;
 
-    @GetMapping("localise/{id}/forecast")
-    ForecastDto getForecast(@PathVariable Long id, @RequestParam(required = false) String period) {
+    @GetMapping("/localise/{id}/forecast")
+    ForecastDto getForecast(@PathVariable Long id, @RequestParam(required = false) String period) throws JsonProcessingException {
         Forecast forecast = forecastService.getForecast(id, period);
+        forecastSaveToDataBase.saveForecastToDataBase(id, period);
         return forecastMapping.mapToForecastDto(forecast);
     }
+
+
+
+
 }
 
 

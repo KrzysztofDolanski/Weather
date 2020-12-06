@@ -41,4 +41,10 @@ public class ExceptionHandlerController {
         log.error(e.getMessage());
     }
 
+    @ExceptionHandler(ForecastNotFountException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    void noWeatherFindInWebService(ForecastNotFountException e){
+        log.error(e.getMessage());
+    }
+
 }

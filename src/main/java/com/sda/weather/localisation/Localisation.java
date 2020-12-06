@@ -1,6 +1,7 @@
 package com.sda.weather.localisation;
 
 import com.sda.weather.forecast.Forecast;
+import com.sda.weather.weather.ConnectionWeather;
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.LuhnCheck;
@@ -25,13 +26,18 @@ public class Localisation {
     private Float lon;
     @Column(nullable = false)
     private String country;
-    @Column(nullable = false) // todo region can be blank
+    @Column
     private String region;
+
+    @Column
+    @OneToMany(mappedBy = "localisation")
+    List<Forecast> forecast;
+
+    @Column
+    @OneToMany(mappedBy = "localisation")
+    List<ConnectionWeather> weathers;
 
     public Optional<String> getRegion() {
         return Optional.ofNullable(region);
     }
-
-//    @OneToMany
-//    List<Forecast> forecast;
 }

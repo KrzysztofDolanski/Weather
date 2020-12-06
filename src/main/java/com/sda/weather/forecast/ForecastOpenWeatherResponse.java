@@ -94,12 +94,12 @@ public class ForecastOpenWeatherResponse {
     }
 
     @NoArgsConstructor
-    public static class Rain{
+    public static class Rain {
         private double _3h;
     }
 
     @NoArgsConstructor
-    public static class Snow{
+    public static class Snow {
         private double _3h;
     }
 }

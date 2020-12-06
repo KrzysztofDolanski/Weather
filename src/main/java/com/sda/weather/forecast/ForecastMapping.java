@@ -1,14 +1,9 @@
 package com.sda.weather.forecast;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sda.weather.localisation.Localisation;
-import com.sda.weather.localisation.LocalisationDefinition;
-import com.sda.weather.localisation.LocalisationDto;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ForecastMapping {
-
 
 
     public ForecastDto mapToForecastDto(Forecast forecast) {
