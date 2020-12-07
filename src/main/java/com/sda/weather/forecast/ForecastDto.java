@@ -19,4 +19,5 @@ public class ForecastDto {
     Double windSpeed;
 
 
+
 }

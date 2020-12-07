@@ -47,4 +47,12 @@ public class ExceptionHandlerController {
         log.error(e.getMessage());
     }
 
+
+    @ExceptionHandler(LocalisationInDataBaseNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    void noLocalisationInDataBase(LocalisationInDataBaseNotFoundException e){
+        log.error(e.getMessage());
+    }
+
+
 }

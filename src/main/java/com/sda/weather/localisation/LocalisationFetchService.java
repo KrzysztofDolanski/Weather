@@ -1,5 +1,6 @@
 package com.sda.weather.localisation;
 
+import com.sda.weather.exeptions.LocalisationInDataBaseNotFoundException;
 import com.sda.weather.weather.ConnectionWeather;
 import com.sda.weather.weather.ConnectionWeatherMapping;
 import com.sda.weather.weather.ConnectionWeatherRepository;
@@ -23,6 +24,7 @@ public class LocalisationFetchService {
     RestTemplate restTemplate = new RestTemplate();
 
     private final LocalisationRepository localisationRepository;
+    private final WeatherStackProperties weatherStackProperties;
 
     List<Localisation> getAllLocalisations() {
         return localisationRepository.findAll();
@@ -30,7 +32,7 @@ public class LocalisationFetchService {
 
     public Localisation getLocalisation(Long id) {
         return localisationRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Cant localize localisation no" + id)); // todo use your own exception
+                .orElseThrow(() -> new LocalisationInDataBaseNotFoundException("Cant localize localisation no" + id)); // todo use your own exception
     }
 
     // todo to remove
@@ -39,7 +41,7 @@ public class LocalisationFetchService {
         String uri = UriComponentsBuilder.newInstance()
                 .scheme("http")
                 .host("api.weatherstack.com/current")
-                .queryParam("access_key", "35159824095457c4e2741bb6604b0ce3")
+                .queryParam("access_key", weatherStackProperties.getToken())
                 .queryParam("query", city)
                 .build().toUriString();
 

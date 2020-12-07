@@ -30,6 +30,7 @@ public class ForecastService {
     Date date = new Date();
 
     private final ObjectMapper objectMapper;
+    private final OpenWeatherProperties openWeatherProperties;
 
     public Forecast getForecast(Long id, String period) throws JsonProcessingException {
         Localisation localisation = localisationFetchService.getLocalisation(id);
@@ -43,7 +44,7 @@ public class ForecastService {
                 .scheme("http")
                 .host("api.openweathermap.org/data/2.5/forecast")
                 .queryParam("q", city)
-                .queryParam("appid", "65bf43aa8dc4a2f7dc96da824bbc8205")
+                .queryParam("appid", openWeatherProperties.getToken())
                 .build().toUriString();
 
         ResponseEntity<String> forEntity = restTemplate.getForEntity(uri, String.class);
@@ -52,19 +53,16 @@ public class ForecastService {
         ForecastOpenWeatherResponse forecastOpenWeatherResponse = objectMapper.readValue(body, ForecastOpenWeatherResponse.class);
         List<ForecastOpenWeatherResponse.SingleForecast> list = forecastOpenWeatherResponse.getList();
 
-
+        //todo must change to period
         String str = "2020-12-08 12:00:00";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
-
-        System.err.println(dateTime);
 
         ForecastOpenWeatherResponse.SingleForecast singleForecast = list
                 .stream().filter(f -> LocalDateTime.parse(f.getDate(),formatter)
                 .equals(dateTime))
                 .findFirst()
                 .orElseThrow(() -> new ForecastNotFountException("Cant find forecast for id " + id));
-
 
         Forecast forecastFromApi2 = Forecast.builder()
                 .temperature(singleForecast.getMain().getTemp())
@@ -75,28 +73,7 @@ public class ForecastService {
                 .date(singleForecast.getDate())
                 .build();
 
-
-        for (int i = 0; i < list.size(); i++) {
-            if (Instant.ofEpochSecond(list.get(i).getDt())
-                    .isAfter(Instant.ofEpochSecond(list.get(i).getDt() - 2))
-                    && ((Instant.ofEpochSecond(list.get(i).getDt())
-                    .isBefore(Instant.ofEpochSecond(list.get(i).getDt() + 2))))) {
-
-                Forecast forecastFromApi = Forecast.builder()
-                        .temperature(list.get(i).getMain().getTemp())
-                        .pressure(list.get(i).getMain().getPressure())
-                        .humidity(list.get(i).getMain().getHumidity())
-                        .windDagre(list.get(i).getWind().getDeg())
-                        .windSpeed(list.get(i).getWind().getSpeed())
-                        .date(list.get(i).getDate())
-                        .build();
-
                 return forecastFromApi2;
-            }
         }
-
-        return null;
-    }
-
-
 }
+
