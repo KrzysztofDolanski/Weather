@@ -50,11 +50,14 @@ public class ForecastService {
         ResponseEntity<String> forEntity = restTemplate.getForEntity(uri, String.class);
         String body = forEntity.getBody();
 
+        System.err.println(body);
+
         ForecastOpenWeatherResponse forecastOpenWeatherResponse = objectMapper.readValue(body, ForecastOpenWeatherResponse.class);
         List<ForecastOpenWeatherResponse.SingleForecast> list = forecastOpenWeatherResponse.getList();
 
         //todo must change to period
-        String str = "2020-12-08 12:00:00";
+        String str = "2020-12-10 12:00:00";
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
 

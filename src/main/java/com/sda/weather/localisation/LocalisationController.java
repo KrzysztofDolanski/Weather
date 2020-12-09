@@ -3,6 +3,8 @@ package com.sda.weather.localisation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,13 +23,23 @@ public class LocalisationController {
     final LocalisationFetchService localisationFetchService;
 
     @PostMapping("/localise")
-    public ResponseEntity<LocalisationDto> createLocalisation(@RequestBody @Valid LocalisationDto localisationDto) {
+    public
+//    String
+    ResponseEntity<LocalisationDto>
+    createLocalisation(@RequestBody @Valid LocalisationDto localisationDto) {
         LocalisationDefinition localisationDefinition = localisationMapping.mapToLocalisationDefinition(localisationDto);
         Localisation createdLocalisation = localisationService.createLocalisation(localisationDefinition);
 
-        return ResponseEntity
+//        ////////////
+//        map.put(createdLocalisation.getId().toString(),createdLocalisation);
+//        ///////////////
+
+        return
+                ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(localisationMapping.mapToLocalisationDto(createdLocalisation));
+
+//        return "weather";
     }
 
     @GetMapping("/localise/{id}")

@@ -2,9 +2,8 @@ package com.sda.weather.localisation;
 
 import com.sda.weather.forecast.Forecast;
 import com.sda.weather.weather.ConnectionWeather;
-import lombok.Builder;
 import lombok.Data;
-import org.hibernate.validator.constraints.LuhnCheck;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +11,7 @@ import java.util.Optional;
 
 @Entity
 @Data
-
+@NoArgsConstructor
 public class Localisation {
 
     @Id

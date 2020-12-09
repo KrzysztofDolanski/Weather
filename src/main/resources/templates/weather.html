@@ -4,17 +4,55 @@
 <head>
     <title>Check weather in city</title>
 </head>
+
 <body>
 <h1>Check weather in city</h1>
 
-<input th:id="city" th:type="text" th:name="city">Test</input>
+<form th:action="@{/weather}" method="get">
+<div><label>
+    <input th:id="city" th:type="text" th:name="city" th:method="get" >
+</label>Test/>
+</div>
 
-<p><button> <a th:href="@{/weather/Poznan}">here</a> </button> to check weather in Poznań</p>
-<p><button> <a th:href="@{/weather/Warsaw}">here</a> </button> to check weather in Warsaw</p>
-<p><button> <a th:href="@{/weather/Gdansk}">here</a> </button> to check weather in Gdańsk</p>
-<p><button> <a th:href="@{/weather/New York}">here</a> </button> to check weather in New York</p>
-<p><button> <a th:href="@{/weather/Sydney}">here</a> </button> to check weather in Sydney</p>
+<p>
+    <button><a th:href="@{/weather/Poznan}">here</a></button>
+    to check weather in Poznań
+</p>
+<p>
+    <button><a th:href="@{/weather/Warsaw}">here</a></button>
+    to check weather in Warsaw
+</p>
+<p>
+    <button><a th:href="@{/weather/Gdansk}">here</a></button>
+    to check weather in Gdańsk
+</p>
+<p>
+    <button><a th:href="@{/weather/New York}">here</a></button>
+    to check weather in New York
+</p>
+<p>
+    <button><a th:href="@{/weather/Sydney}">here</a></button>
+    to check weather in Sydney
+</p>
 
+<!--<p th:text="createdLocalisation.getId().toString()"/>-->
+
+
+<table>
+<tr>
+
+        <td>
+                <label>
+                    <input type="text">
+                </label>
+
+
+        </td>
+    </tr>
+
+</table>
+
+Hello<span th:text="${name}"/>
 
 </body>
 </html>
