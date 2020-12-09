@@ -25,14 +25,14 @@ class ForecastMappingTest {
     @Spy
     RestTemplate restTemplate;
 
+    @Autowired
+    ForecastMapping forecastMapping;
+
     @Spy
     ObjectMapper objectMapper;
 
     @Mock
     ForecastService forecastService;
-
-
-
 
 
     @BeforeEach
@@ -58,7 +58,6 @@ class ForecastMappingTest {
         forecast.setWindDagre(12.3);
         forecast.setWindSpeed(50.0);
 
-        ForecastMapping forecastMapping = new ForecastMapping();
         ForecastDto forecastDto = forecastMapping.mapToForecastDto(forecast);
         //when
         Double temperature = forecastDto.getTemperature();

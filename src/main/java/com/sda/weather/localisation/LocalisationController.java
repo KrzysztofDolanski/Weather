@@ -24,22 +24,16 @@ public class LocalisationController {
 
     @PostMapping("/localise")
     public
-//    String
     ResponseEntity<LocalisationDto>
     createLocalisation(@RequestBody @Valid LocalisationDto localisationDto) {
         LocalisationDefinition localisationDefinition = localisationMapping.mapToLocalisationDefinition(localisationDto);
         Localisation createdLocalisation = localisationService.createLocalisation(localisationDefinition);
-
-//        ////////////
-//        map.put(createdLocalisation.getId().toString(),createdLocalisation);
-//        ///////////////
 
         return
                 ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(localisationMapping.mapToLocalisationDto(createdLocalisation));
 
-//        return "weather";
     }
 
     @GetMapping("/localise/{id}")

@@ -3,6 +3,7 @@ package com.sda.weather.weather;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ public class ConnectionWeatherController {
         ConnectionWeather entity = connectionWeatherService.getForecast(city);
         ConnectionWeatherDto connectionWeatherDto = connectionWeatherMapping.mapToConnectionWeatherDto(entity);
         connectionWeatherSaveService.saveInDataBaseConnectionWeather(entity);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(connectionWeatherDto);

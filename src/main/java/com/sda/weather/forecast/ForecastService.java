@@ -26,13 +26,15 @@ public class ForecastService {
     private final LocalisationFetchService localisationFetchService;
     RestTemplate restTemplate = new RestTemplate();
 
+    private final ForecastMapping forecastMapping;
+
 
     Date date = new Date();
 
     private final ObjectMapper objectMapper;
     private final OpenWeatherProperties openWeatherProperties;
 
-    public Forecast getForecast(Long id, String period) throws JsonProcessingException {
+    public Forecast getForecast(Long id, LocalDate forecastDate) throws JsonProcessingException {
         Localisation localisation = localisationFetchService.getLocalisation(id);
 
         String city = localisation.getCity();
@@ -55,15 +57,10 @@ public class ForecastService {
         ForecastOpenWeatherResponse forecastOpenWeatherResponse = objectMapper.readValue(body, ForecastOpenWeatherResponse.class);
         List<ForecastOpenWeatherResponse.SingleForecast> list = forecastOpenWeatherResponse.getList();
 
-        //todo must change to period
-        String str = "2020-12-10 12:00:00";
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime dateTime = LocalDateTime.parse(str, formatter);
+        LocalDateTime predictionDate = forecastDate.atTime(12, 00);
 
         ForecastOpenWeatherResponse.SingleForecast singleForecast = list
-                .stream().filter(f -> LocalDateTime.parse(f.getDate(),formatter)
-                .equals(dateTime))
+                .stream().filter(f -> mapToLocalDate(f.getDate()).isEqual(predictionDate))
                 .findFirst()
                 .orElseThrow(() -> new ForecastNotFountException("Cant find forecast for id " + id));
 
@@ -77,6 +74,12 @@ public class ForecastService {
                 .build();
 
                 return forecastFromApi2;
+        }
+
+
+        private LocalDateTime mapToLocalDate(String date){
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            return LocalDateTime.parse(date, formatter);
         }
 }
 

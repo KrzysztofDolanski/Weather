@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
+
 @RestController
 @RequiredArgsConstructor
 public class ForecastController {
@@ -16,9 +18,9 @@ public class ForecastController {
     private final ForecastSaveToDataBaseService forecastSaveToDataBaseService;
 
     @GetMapping("/localise/{id}/forecast")
-    ForecastDto getForecast(@PathVariable Long id, @RequestParam(required = false) String period) throws JsonProcessingException {
-        Forecast forecast = forecastService.getForecast(id, period);
-        forecastSaveToDataBaseService.saveForecastToDataBase(id, period);
+    ForecastDto getForecast(@PathVariable Long id, @RequestParam(required = false) LocalDate forecastDate) throws JsonProcessingException {
+        Forecast forecast = forecastService.getForecast(id, forecastDate);
+        forecastSaveToDataBaseService.saveForecastToDataBase(id, forecastDate);
         return forecastMapping.mapToForecastDto(forecast);
     }
 

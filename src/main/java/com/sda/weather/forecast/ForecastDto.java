@@ -12,11 +12,12 @@ import lombok.NoArgsConstructor;
 public class ForecastDto {
 
 
-    Double temperature;
-    Double pressure;
-    Double humidity;
-    Double windDagre;
-    Double windSpeed;
+    private Double temperature;
+    private Double pressure;
+    private Double humidity;
+   private String windDirection;
+    private Double windSpeed;
+    private String date;
 
 
 
