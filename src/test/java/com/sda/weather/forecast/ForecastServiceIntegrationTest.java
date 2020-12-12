@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @SpringBootTest
@@ -41,7 +42,9 @@ class ForecastServiceIntegrationTest {
         localisation.setCountry("Poland");
         localisation.setLat(50.0f);
         localisation.setLon(50.0f);
+
         Long id = localisationRepository.save(localisation).getId();
+
         MockHttpServletRequestBuilder request = get("/localise/" + id + "/forecast");
 
         // when
