@@ -53,9 +53,9 @@ class LocalisationIntegrationTest {
         assertThat(localisations.get(0)).satisfies(localisation -> {
             assertThat(localisation.getCity()).isEqualTo("Gdansk");
             assertThat(localisation.getCountry()).isEqualTo("Polska");
-            assertThat(localisation.getRegion()).isEqualTo("pomorskie");
-            assertThat(localisation.getLat()).isEqualTo("54.347629");
-            assertThat(localisation.getLon()).isEqualTo("18.6452324");
+            assertThat(localisation.getRegion()).contains("pomorskie");
+            assertThat(localisation.getLat()).isEqualTo(54f);
+            assertThat(localisation.getLon()).isEqualTo(33f);
         });
     }
 

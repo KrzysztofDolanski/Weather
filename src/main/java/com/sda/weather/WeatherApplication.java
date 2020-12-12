@@ -15,7 +15,7 @@ import java.util.Collections;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-@EnableConfigurationProperties ({OpenWeatherProperties.class, WeatherStackProperties.class})
+@EnableConfigurationProperties({OpenWeatherProperties.class, WeatherStackProperties.class})
 public class WeatherApplication implements CommandLineRunner {
 
 
@@ -28,22 +28,20 @@ public class WeatherApplication implements CommandLineRunner {
     }
 
 
-
     @Override
     public void run(String... args) throws Exception {
-        if (userRepository.findAll().size()==0){
-            AppUser user1 = new AppUser();
-            user1.setUsername("Krzysztof");
-            user1.setPassword(passwordEncoder.encode("777"));
-            user1.setAuthorities(Collections.singletonList(()->"ROLE_USER"));
-            userRepository.save(user1);
+        userRepository.deleteAll();
 
+        AppUser user1 = new AppUser();
+        user1.setUsername("Krzysztof");
+        user1.setPassword(passwordEncoder.encode("777"));
+        user1.setAuthorities(Collections.singletonList(() -> "ROLE_USER"));
+        userRepository.save(user1);
 
-            AppUser user2 = new AppUser();
-            user1.setUsername("Justyna");
-            user1.setPassword(passwordEncoder.encode("23423"));
-            user1.setAuthorities(Collections.singletonList(()->"ROLE_ADMIN"));
-            userRepository.save(user1);
-        }
+        AppUser user2 = new AppUser();
+        user2.setUsername("Justyna");
+        user2.setPassword(passwordEncoder.encode("23423"));
+        user2.setAuthorities(Collections.singletonList(() -> "ROLE_ADMIN"));
+        userRepository.save(user2);
     }
 }
