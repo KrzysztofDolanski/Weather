@@ -1,4 +1,4 @@
-package com.sda.weather.forecast;
+package com.sda.weather.forecast.client;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -15,7 +15,8 @@ public class ForecastOpenWeatherResponse {
     String cnt;
 
     private CityResponse city;
-    private List<SingleForecast> list;
+    @JsonProperty("list")
+    private List<SingleForecast> singleForecast;
 
     @Data
     public static class SingleForecast {

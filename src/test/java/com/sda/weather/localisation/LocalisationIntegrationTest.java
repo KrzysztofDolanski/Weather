@@ -99,6 +99,6 @@ class LocalisationIntegrationTest {
         List<Localisation> localisations = localisationRepository.findAll();
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());
         assertThat(localisations).isEmpty();
-        
+
     }
 }

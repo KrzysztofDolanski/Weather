@@ -2,6 +2,7 @@ package com.sda.weather.localisation;
 
 import com.sda.weather.forecast.Forecast;
 import com.sda.weather.weather.ConnectionWeather;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @Entity
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class Localisation {
 
@@ -28,13 +30,13 @@ public class Localisation {
     @Column
     private String region;
 
-    @Column
-    @OneToMany(mappedBy = "localisation")
-    List<Forecast> forecast;
-
-    @Column
-    @OneToMany(mappedBy = "localisation")
-    List<ConnectionWeather> weathers;
+//    @Column
+//    @OneToMany(mappedBy = "localisation")
+//    List<Forecast> forecast;
+//
+//    @Column
+//    @OneToMany(mappedBy = "localisation")
+//    List<ConnectionWeather> weathers;
 
     public Optional<String> getRegion() {
         return Optional.ofNullable(region);

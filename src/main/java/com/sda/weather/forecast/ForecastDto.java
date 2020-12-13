@@ -7,18 +7,15 @@ import lombok.NoArgsConstructor;
 
 @Builder
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class ForecastDto {
 
 
-    private Double temperature;
-    private Double pressure;
-    private Double humidity;
-   private String windDirection;
-    private Double windSpeed;
-    private String date;
-
+    private final Double temperature;
+    private final Double pressure;
+    private final Double humidity;
+    private final String windDirection;
+    private final Double windSpeed;
+    private final String date;
 
 
 }

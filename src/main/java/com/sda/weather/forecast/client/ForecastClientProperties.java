@@ -1,16 +1,11 @@
-package com.sda.weather.forecast;
+package com.sda.weather.forecast.client;
 
 import lombok.Data;
-import lombok.ToString;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
 
 @Data
-@Component
-@ToString
 @ConfigurationProperties(prefix = "com.sda.weather.open-weather")
-public class OpenWeatherProperties {
-
+public class ForecastClientProperties {
 
     private String token;
 }

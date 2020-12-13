@@ -1,6 +1,6 @@
 package com.sda.weather;
 
-import com.sda.weather.forecast.OpenWeatherProperties;
+import com.sda.weather.forecast.client.ForecastClientProperties;
 import com.sda.weather.localisation.WeatherStackProperties;
 import com.sda.weather.security.AppUser;
 import com.sda.weather.security.UserRepository;
@@ -15,7 +15,7 @@ import java.util.Collections;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-@EnableConfigurationProperties({OpenWeatherProperties.class, WeatherStackProperties.class})
+@EnableConfigurationProperties({ForecastClientProperties.class, WeatherStackProperties.class})
 public class WeatherApplication implements CommandLineRunner {
 
 
