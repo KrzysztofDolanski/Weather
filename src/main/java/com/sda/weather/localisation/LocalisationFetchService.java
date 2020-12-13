@@ -45,10 +45,13 @@ public class LocalisationFetchService {
                 .queryParam("query", city)
                 .build().toUriString();
 
+
         ResponseEntity<String> forEntity = restTemplate.getForEntity(uri, String.class);
         String body = forEntity.getBody();
 
         JSONObject jsonObject = new JSONObject(body);
+
+
         JSONObject location = jsonObject.getJSONObject("location");
 
         String city1 = location.getString("name");

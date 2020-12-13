@@ -1,10 +1,13 @@
 package com.sda.weather.forecast;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class ForecastMapping {
 
+    private final WindDirectionMapping windDirectionMapping;
 
     public ForecastDto mapToForecastDto(Forecast forecast) {
         return ForecastDto.builder()
@@ -12,21 +15,11 @@ public class ForecastMapping {
                 .pressure(forecast.getPressure())
                 .humidity(forecast.getHumidity())
                 .windSpeed(forecast.getWindSpeed())
-                .windDagre(forecast.getWindDagre())
+                .windDirection(windDirectionMapping.mapWindDirection(forecast.getWindDagre()))
+                .date(forecast.getCreatedDate().toString())
                 .build();
     }
 
-    public Forecast mapToForecast(ForecastOpenWeatherResponse forecastOpenWeatherResponse, int period) {
-
-        return Forecast.builder()
-                .temperature(forecastOpenWeatherResponse.getList().get(period).getMain().getTemp())
-                .pressure(forecastOpenWeatherResponse.getList().get(period).getMain().getPressure())
-                .humidity(forecastOpenWeatherResponse.getList().get(period).getMain().getHumidity())
-                .windSpeed(forecastOpenWeatherResponse.getList().get(period).getWind().getSpeed())
-                .windDagre(forecastOpenWeatherResponse.getList().get(period).getWind().getDeg())
-                .date(forecastOpenWeatherResponse.getList().get(period).getDate())
-                .build();
-    }
 }
 
 

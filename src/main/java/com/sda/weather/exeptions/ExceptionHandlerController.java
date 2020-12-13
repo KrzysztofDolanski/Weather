@@ -55,4 +55,10 @@ public class ExceptionHandlerController {
     }
 
 
+    @ExceptionHandler(ThisIsNotWindException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    void windCantBeMapped(ThisIsNotWindException e){
+        log.error(e.getMessage());
+    }
+
 }

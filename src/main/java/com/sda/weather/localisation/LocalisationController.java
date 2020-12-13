@@ -3,6 +3,9 @@ package com.sda.weather.localisation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,14 +23,19 @@ public class LocalisationController {
     final LocalisationMapping localisationMapping;
     final LocalisationFetchService localisationFetchService;
 
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping("/localise")
-    public ResponseEntity<LocalisationDto> createLocalisation(@RequestBody @Valid LocalisationDto localisationDto) {
+    public
+    ResponseEntity<LocalisationDto>
+    createLocalisation(@RequestBody @Valid LocalisationDto localisationDto) {
         LocalisationDefinition localisationDefinition = localisationMapping.mapToLocalisationDefinition(localisationDto);
         Localisation createdLocalisation = localisationService.createLocalisation(localisationDefinition);
 
-        return ResponseEntity
+        return
+                ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(localisationMapping.mapToLocalisationDto(createdLocalisation));
+
     }
 
     @GetMapping("/localise/{id}")

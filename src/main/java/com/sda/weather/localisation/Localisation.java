@@ -2,9 +2,9 @@ package com.sda.weather.localisation;
 
 import com.sda.weather.forecast.Forecast;
 import com.sda.weather.weather.ConnectionWeather;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.hibernate.validator.constraints.LuhnCheck;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,7 +12,8 @@ import java.util.Optional;
 
 @Entity
 @Data
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class Localisation {
 
     @Id
@@ -29,13 +30,13 @@ public class Localisation {
     @Column
     private String region;
 
-    @Column
-    @OneToMany(mappedBy = "localisation")
-    List<Forecast> forecast;
-
-    @Column
-    @OneToMany(mappedBy = "localisation")
-    List<ConnectionWeather> weathers;
+//    @Column
+//    @OneToMany(mappedBy = "localisation")
+//    List<Forecast> forecast;
+//
+//    @Column
+//    @OneToMany(mappedBy = "localisation")
+//    List<ConnectionWeather> weathers;
 
     public Optional<String> getRegion() {
         return Optional.ofNullable(region);
