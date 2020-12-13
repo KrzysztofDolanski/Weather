@@ -5,8 +5,12 @@ import com.sda.weather.weather.ConnectionWeather;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +18,7 @@ import java.util.Optional;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Localisation {
 
     @Id
@@ -30,6 +35,10 @@ public class Localisation {
     @Column
     private String region;
 
+    @CreatedDate
+    private Instant createdDate;
+    @CreatedBy
+    private String createdBy;
 //    @Column
 //    @OneToMany(mappedBy = "localisation")
 //    List<Forecast> forecast;
